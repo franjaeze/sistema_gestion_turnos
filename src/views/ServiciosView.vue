@@ -1,47 +1,40 @@
 <template>
   <ion-page>
     <ion-content>
-      <ion-row><ion-col size-lg="2" size-sm="12"></ion-col>
-        <ion-col size-lg="8" size-sm="12">
-          <h1 id="servicioTitulo" class="espacio">Dejate seducir por nuestros increibles servicios </h1>
-        </ion-col>
-        <ion-col size-lg="2" size-sm="12"></ion-col>
-      </ion-row>
+
       <ion-grid>
         <ion-row>
-          <ion-col size-lg="2" size-sm="12">
-
+          <ion-col size-lg="2" size-xs="12"></ion-col>
+          <ion-col size-lg="8" size-xs="12">
+            <h1 id="servicioTitulo" class="">Dejate seducir por nuestros increibles servicios </h1>
           </ion-col>
-          <ion-col size-lg="8" size-sm="12">
-            <ion-button class="button-50" v-if="isAdmin" v-show="!mostrar"   @click="mostrarForm()">Agregar Servicio </ion-button>
+          <ion-col size-lg="2" size-xs="12"></ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size-lg="2" size-xs="12">
+          </ion-col>
+          <ion-col size-lg="8" size-xs="12">
+            <ion-button class="button-50" v-if="isAdmin" v-show="!mostrar" @click="mostrarForm()">Agregar Servicio
+            </ion-button>
             <ion-button class="button-50" v-if="isAdmin" @click="listarTurnos"></ion-button>
-
-            <ion-item v-show="mostrar"> <ion-list class="lista" >
-
-
-              <ion-input class="margin3" v-model="nuevoServicio.nombre" color="warning" fill="outline"
-                label-placement="floating" label="nombre" :required="true"> </ion-input>
-
-              <ion-input class="margin3" v-model="nuevoServicio.duracion" interface="popover" label="duracion"
+            <ion-item v-show="mostrar"> <ion-list class="lista">
+                <ion-input class="margin3" v-model="nuevoServicio.nombre" color="warning" fill="outline"
+                  label-placement="floating" label="nombre" :required="true"> </ion-input>
+                <ion-input class="margin3" v-model="nuevoServicio.duracion" interface="popover" label="duracion"
                   color="warning" fill="outline" :required="true"></ion-input>
-
-
-              <ion-input class="margin3" v-model="nuevoServicio.valor" interface="popover"
-                label="valor"   color="warning" fill="outline" :required="true"> </ion-input>
-
-
-              <ion-input class="margin3" v-model="nuevoServicio.detalle" color="warning" label-placement="floating"
-                fill="outline" label="detalle"  ></ion-input>
-                
-              <ion-input class="margin3" v-model="nuevoServicio.tipoServicio" color="warning" label-placement="floating"
-                fill="outline" label="tipoServicio"  ></ion-input>
-              <ion-button class="button-50" id="open-toast" @click="agregarServicio()">Agregar servicio</ion-button>
-            </ion-list></ion-item>
-
-
-
-
-
+                <ion-input class="margin3" v-model="nuevoServicio.valor" interface="popover" label="valor" color="warning"
+                  fill="outline" :required="true"> </ion-input>
+                <ion-input class="margin3" v-model="nuevoServicio.detalle" color="warning" label-placement="floating"
+                  fill="outline" label="detalle"></ion-input>
+                <ion-input class="margin3" v-model="nuevoServicio.tipoServicio" color="warning" label-placement="floating"
+                  fill="outline" label="tipoServicio"></ion-input>
+                <ion-button class="button-50" id="open-toast" @click="agregarServicio()">Agregar servicio</ion-button>
+                <ion-col size-lg="2" size-xs="12"></ion-col>
+              </ion-list>
+            </ion-item>
 
             <ion-card v-for="e in servicios" :key="e.tipoServicio">
               <ion-card-content><ion-card-title> {{ e.nombre }} </ion-card-title>
@@ -78,7 +71,7 @@ export default {
       isLogin,
       isAdmin,
       user,
-      mostrar:false
+      mostrar: false
     };
   },
 
@@ -86,7 +79,7 @@ export default {
     return {
       masajes: [],
       servicios: [],
-      nuevoServicio: {nombre:"", duracion:"", valor:"",detalle:"",tipoServicio:""},
+      nuevoServicio: { nombre: "", duracion: "", valor: "", detalle: "", tipoServicio: "" },
       page: 1
     }
   }, mounted() {
@@ -102,11 +95,11 @@ export default {
         alert("Se produjo un error");
       }
     },
-    mostrarForm(){
+    mostrarForm() {
       this.mostrar = true;
       console.log(this.mostrar)
     },
-     agregarServicio(){
+    agregarServicio() {
       this.mostrar = false;
       console.log(this.mostrar)
     }

@@ -4,7 +4,7 @@
 
 
     
-    <h2>Logout   {{ this.usuarioActual.apellido }}  </h2>
+    <h2 class="tituloMenu">Usuario  {{ this.usuarioActual.nombre  }}   {{ this.usuarioActual.apellido }}  </h2>
 <ion-list v-if="mostrar">
   <ion-item><b> Nombre   </b> <br> <br>   {{usuarioActual.nombre  }}  </ion-item>
   <ion-item><b>  Apellido </b> <br> <br> {{usuarioActual.apellido  }}</ion-item>

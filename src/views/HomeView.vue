@@ -1,6 +1,6 @@
 <script>
 import { IonPage, IonContent, IonTitle, IonItem, IonHeader, IonGrid, IonRow, IonCol } from '@ionic/vue'
-import velas from '../assets/velas.jpg'
+
 export default {
   components: { IonPage, IonContent, IonTitle, IonItem, IonHeader, IonGrid, IonRow, IonCol }
 
@@ -14,7 +14,7 @@ export default {
       <ion-grid>
         <ion-row>
           <ion-col></ion-col>
-          <ion-col size-md="8"> <ion-header class="titulazo espacio">
+          <ion-col size-md="8"> <ion-header class="titulazo">
               Un tratamiento para cada necesidad
             </ion-header>
           </ion-col>
@@ -37,13 +37,7 @@ export default {
   </ion-page>
 </template>
 <style>
-.titulazo {
-  font-size: calc(50px + 0.22vw);
-  font-weight: 600;
-  color: #edeceb;
-  text-shadow: 0px 0px 5px #777141, 0px 0px 10px #c1ab6ad9, 0px 0px 10px #c3a463,
-    0px 0px 20px #a57229;
-}
+
 
 :root {
   --color-primary: hsl(32, 96%, 28%);

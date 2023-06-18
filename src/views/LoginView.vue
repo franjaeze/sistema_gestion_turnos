@@ -1,21 +1,24 @@
 <template>
   <ion-page>
-    <ion-content>
-      <h2>Login</h2>
-      <ion-input v-model="usuario.dni" placeholder="Ingrese su dni" label="Dni" type="int"></ion-input>
-      <ion-input v-model="usuario.password" label="Password" placeholder="Ingrese su password" type="password"></ion-input>
-      <ion-button class="button-50" @click="loguear">Login</ion-button>
-    </ion-content>  
+    <ion-content class="">
+      
+      <h2 class="tituloGeneral">Login</h2><ion-item class="displayblock">
+         <ion-label>
+      <ion-input class="input" v-model="usuario.dni" placeholder="Ingrese su dni" label="Dni: " type="int"></ion-input>
+      <ion-input class="input" v-model="usuario.password" label="Password: " placeholder="Ingrese su password" type="password"></ion-input>
+    <ion-button id="margen" class="button-50 " @click="loguear">Login</ion-button>
+   </ion-label> </ion-item>   
+  </ion-content>  
   </ion-page>
 </template>
 
 <script>
-import { IonPage, IonButton, IonContent, IonInput } from "@ionic/vue";
+import { IonPage, IonButton, IonContent, IonInput,IonItem,IonList, IonLabel } from "@ionic/vue";
 import { useLoginStore } from "../stores/login";
 import axios from 'axios';
 
 export default {
-  components: { IonPage, IonButton, IonContent, IonInput },
+  components: { IonPage, IonButton, IonContent, IonInput,IonItem,IonList,IonLabel},
   setup() {
     const store = useLoginStore();
     const { login } = store;
@@ -41,31 +44,12 @@ export default {
           alert('Credenciales incorrectas')
         }   
     
-/* 
-        if(usu.dni == this.usuario.dni &&  usu.password == this.usuario.password) {
-            console.log('Encontrado')
-        }
-        else {
-          console.log('Error: No encontrado')
-
-        } */
-
-
-
-        
-       /*  if (this.usuario.dni=="987654321" && this.usuario.password=="123456") {
-          this.login( { dni: this.usuario.dni, permissions: [] } )
-          this.$router.push('home')
-        } else if (this.usuario.dni=="123456789" && this.usuario.password=="123456") {
-          this.login( { dni: this.usuario.dni, permissions: ['config'] } )
-          this.$router.push('config') 
-          } else {
-          alert('Credenciales incorrectas')
-        }    */
+    
     }
   }
 };
 </script>
 
 <style>
+ 
 </style>
