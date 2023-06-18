@@ -80,7 +80,7 @@ export default {
         <ion-buttons  v-if="devWidth < 576" slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title class="tituloMenu">Beuaty spa<span v-if="devWidth > 576">
+        <ion-title > <p class="tituloMenu">Beuaty spa</p><span v-if="devWidth > 576">
           <RouterLink class="button-56 " to="/">Home 
          <ion-icon class="iconos" :icon ="home"></ion-icon> </RouterLink>
       <RouterLink class="button-56" v-if="isLogin" to="/indexTurnos">Turnos 

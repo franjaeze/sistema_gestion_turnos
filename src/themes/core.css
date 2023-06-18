@@ -261,10 +261,10 @@ ion-icon {
   border-width: 0;
   box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
   box-sizing: border-box;
-  color: #ededf1;
+  color: #4f4f50;
   cursor: pointer;
   display: inline-flex;
-  font-family: "JetBrains Mono", monospace;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   height: 35px;
   margin: 5px;
   justify-content: center;
@@ -280,7 +280,13 @@ ion-icon {
   touch-action: manipulation;
   white-space: nowrap;
   will-change: box-shadow, transform;
-  font-size: 18px;
+  font-size: 22px;
+  margin: 5px;
+  font-size: 22px;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-weight: 700;
+  color: #655959;
+  letter-spacing: 0.2em;
 }
 
 
@@ -298,7 +304,7 @@ ion-icon {
 }
 
 .iconos{
-  color: #625235;
+  color: #acaaaa;
 }
 ion-toast {
   --background: var(--ion-color-light-shade);
