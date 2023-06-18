@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿# 2023-TP2-BE-21E-Sistema de turnos "Beauty Spa" 💄 	💅
+=======
+# 2023-TP2-BE-21E-Sistema de turnos "Beauty Spa" 💄 	💅
+>>>>>>> 92d2752aa58222481c4f9073aa9beb19facae42f
 # Integrantes: Paola Yanina Quiñonez, Mateo Agustin Bellomo, Camila Belen Szesko y Francisco Javier Ezequiel Veron
 
 # 0. Descripcion General de la Situacion 📍

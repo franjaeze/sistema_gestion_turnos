@@ -1,6 +1,9 @@
-# ejemplo
+# about the Project
 
-This template should help get you started developing with Vue 3 in Vite.
+This project was made in order to practice the new technologies we learnd in "Programacion en Nuevas Tecnologias 2" subject, from ORT institute. The technologies we had to try were: Vue js, Pinia, Ionic, Axios. Collaborations Mateo Bellomo, Camila Szeko and Paola Quiñonez.
+
+The project istelf its a booking website for a Beauty spa
+
 
 ## Recommended IDE Setup
 
