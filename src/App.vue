@@ -43,7 +43,7 @@ export default {
     <ion-menu v-if="devWidth < 576" contentId="main-content">
     <ion-header >
       <ion-toolbar>
-        <ion-title class="tituloMenu">Beauty Menu</ion-title>
+        <ion-title class="tituloMenu">Beauty Menu </ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -80,7 +80,8 @@ export default {
         <ion-buttons  v-if="devWidth < 576" slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title > <p class="tituloMenu">Beuaty spa</p><span v-if="devWidth > 576">
+        <ion-title > <p class="tituloMenu">Beuaty spa</p>  <p v-if="isLogin" class="bienvenido">  </p>
+       <span v-if="devWidth > 576">
           <RouterLink class="button-56 " to="/">Home 
          <ion-icon class="iconos" :icon ="home"></ion-icon> </RouterLink>
       <RouterLink class="button-56" v-if="isLogin" to="/indexTurnos">Turnos 
@@ -98,6 +99,9 @@ export default {
         <ion-icon class="iconos" :icon ="exit"></ion-icon>   </RouterLink>
         <RouterLink class="button-56" to="/about">About 
         <ion-icon class="iconos" :icon ="apps"></ion-icon> </RouterLink>
+        <p v-if="isLogin" class="bienvenido">Bienvenido</p>
+        <ion-chip  v-if="isLogin" class="chip"> <ion-icon :icon="person" color="primary"></ion-icon><p></p> {{ user.nombre }} </ion-chip>
+     <ion-chip   v-if="isAdmin" class="admin" > Usted esta en rol  {{ user.rol }} </ion-chip>
         </span>
         </ion-title>   
         

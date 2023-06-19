@@ -2,11 +2,11 @@
   <ion-content>
     <ion-grid>
       <ion-row>
-        <ion-col size-lg="3" size-sm="12">
+        <ion-col size-lg="3" size-xs="12">
         </ion-col>
-        <ion-col size-lg="6" size-sm="12">
+        <ion-col size-lg="6" size-xs="12">
 
-          <ion-button class="button-50" v-if="!isAdmin" @click="misTurnos">Mis turnos</ion-button>
+          <ion-button class="button-50" id="grande" v-if="!isAdmin" @click="misTurnos">Mis turnos</ion-button>
           <ion-button class="button-50" v-if="isAdmin" @click="listarTurnos">Listar turnos</ion-button>
           <ion-button v-if="isAdmin" class="button-50" @click="mostarForm">Agregar turno</ion-button>
           <ion-button v-show="!mostrar" class="button-50" @click="mostarForm">Sacar turno</ion-button>
@@ -53,28 +53,40 @@
           </ion-list>
 
         </ion-col>
-        <ion-col size-lg="2" size-sm="0"></ion-col>
+        <ion-col size-lg="2" size-xs="0"></ion-col>
       </ion-row>
     </ion-grid>
 
 
     <ion-grid>
-      <ion-row v-if="this.mostrarTurnos">
-        <ion-col size-lg="3" size-sm="12"> </ion-col>
-        <ion-col size-lg="2" size-sm="12"><ion-text color="tertiary"><i>ID: DNI: Servicio: Profesional:</i></ion-text>
+      <ion-row v-if="this.mostrarTurnos || turnos.length>1">
+        <ion-col size-lg="3" size-xs="12"> </ion-col>
+        <ion-col size-lg="2" size-xs="12"><ion-text color="tertiary"><i>ID: DNI: Servicio: Profesional:</i></ion-text>
         </ion-col>
-        <ion-col size-lg="1" size-sm="12"><ion-text color="tertiary"> Fecha y hora: </ion-text></ion-col>
-        <ion-col size-lg="2" size-sm="12">Estado:</ion-col>
-        <ion-col size-lg="3" size-sm="12"></ion-col>
+        <ion-col size-lg="1" size-xs="12"><ion-text color="tertiary"> Fecha y hora: </ion-text></ion-col>
+        <ion-col size-lg="2" size-xs="12"><ion-text color="tertiary"> Estado </ion-text></ion-col>
+        <ion-col size-lg="3" size-xs="12"></ion-col>
       </ion-row>
       <ion-row>
-        <ion-col size-lg="3" size-sm="12"> </ion-col>
-        <ion-col size-lg="6" size-sm="12">
+        <ion-col size-lg="3" size-xs="12"> </ion-col>
+        <ion-col size-lg="6" size-xs="12">
           <ion-list lines="full" v-for="e in turnos" :key="e.id">
             <ion-item color="medium">
-              {{ e.id }} {{ e.dniUsuario }} {{ e.idServicio }} {{ e.dniProfesional }} {{ e.fechaHora }} {{ e.estado }}
+           <p>    {{ e.id }} </p> 
+           <p>  {{ e.dniUsuario }} </p> 
+             {{ e.idServicio }} 
+             {{ e.dniProfesional }}
+               <b>     {{ e.fechaHora }}</b>
+                     {{ e.estado }}
               <ion-button size="small" id="present-alert" class="button-modificar"
-                @click="confirmarEliminacion(e.id)">Eliminar</ion-button> <!-- //id="delete-toast" -->
+                @click="confirmarEliminacion(e.id)">
+               
+                 <p v-if="devWidth > 576">Eliminar</p>
+                
+                  <ion-icon :icon="trash"  :size="devWidth > 576 ? 'small' : 'large'" aria-label="Eliminar" color="danger"></ion-icon>
+    
+                
+                </ion-button> <!-- //id="delete-toast" -->
 
 
               <ion-alert ref="Alert" trigger="present-alert" header="Esta seguro que desea eliminar el turno?" :buttons="alertButtons"
@@ -82,11 +94,17 @@
 
               <ion-toast color="primary" trigger="delete-toast" message="Hasta la vista turno! Lo hemos eliminado"
                 :duration="3000" :icon="document"></ion-toast>
-              <ion-button size="small" class="button-modificar" @click="redireccionTurno(e.id)">Modificar</ion-button>
+
+
+              <ion-button size="small" class="button-modificar" @click="redireccionTurno(e.id)">
+             
+                 <p v-if="devWidth > 576" >Modificar</p>
+                    <ion-icon :icon="build" aria-label="Modificar" :size="devWidth > 576 ? 'small' : 'large'" color="danger"></ion-icon> 
+                </ion-button>
 
             </ion-item></ion-list> </ion-col>
 
-        <ion-col size-lg="2" size-sm="0"></ion-col>
+        <ion-col size-lg="2" size-xs="0"></ion-col>
       </ion-row>
     </ion-grid>
 
@@ -99,7 +117,7 @@
 </template>
 
 <script>
-import { IonPage, IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow } from "@ionic/vue";
+import { IonPage,IonIcon, IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow } from "@ionic/vue";
 import turnosService from '../services/turnosService'
 import { storeToRefs } from "pinia";
 import { useLoginStore } from "../stores/login";
@@ -107,11 +125,12 @@ import { document } from 'ionicons/icons';
 import serviciosService from '../services/serviciosService'
 import empleadosService from '../services/empleadosService'
 import { ref } from 'vue';
+import {  trash, person,build } from 'ionicons/icons'
 
 
 
 export default {
-  components: { IonPage, IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow },
+  components: { IonPage, IonIcon,IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow },
   setup() {
     const handlerMessage = ref('');
     const roleMessage = ref('');
@@ -147,16 +166,28 @@ export default {
       roleMessage,
       alertButtons,
       setResult,
+      devWidth: 0,
+      person,trash,build
     }
-  }, mounted() {
+  },
+   mounted() {
     this.listarServicios()
     this.listarEmpleados()
+    this.devWidth = window.innerWidth;
+    window.addEventListener('resize', this.handleResize);
   },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.handleResize);
+  },
+  
   methods: {
     irAHome() {
       this.$router.push("/");
 
-    }, async listarServicios() {
+    }, handleResize() {
+      this.devWidth = window.innerWidth;
+    } ,
+    async listarServicios() {
       try {
         this.servicios = await serviciosService.listarServicios()
 
@@ -326,4 +357,5 @@ export default {
   will-change: box-shadow, transform;
   touch-action: manipulation;
 }
+  
 </style>

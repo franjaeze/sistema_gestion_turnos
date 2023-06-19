@@ -208,6 +208,18 @@ ion-icon {
     padding: 0.25em 0.75em;
   }
 }
+@media (max-width: 768px) {
+  .button-54 {
+    padding: 0.25em 0.75em;
+  }
+  .button-modificar{
+    padding: 0.1em 0.1em; 
+    font-size: 1px;
+  }
+  .button-50 {
+    display: block;
+  }
+}
 .menuGeneral {
   align-items: center;
   appearance: none;
