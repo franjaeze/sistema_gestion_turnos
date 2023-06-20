@@ -22,7 +22,7 @@
 
             <ion-select class="margin3" v-model="turnoSeleccionado.idServicio" interface="popover" label="Servicio"
               placeholder="Servicio" color="warning" fill="outline" required="true">
-              <ion-select-option v-for="e in servicios" :value="e.nombre"> {{ e.nombre }}</ion-select-option>
+               <ion-select-option v-for="e in servicios" :value="e.nombre"> {{ e.nombre }}</ion-select-option>
               <!--  <ion-select-option value="Pedicura">Pedicura</ion-select-option>
         <ion-select-option value="Masajes">Masajes</ion-select-option> -->
             </ion-select>
@@ -59,7 +59,7 @@
 
 
     <ion-grid>
-      <ion-row v-if="this.mostrarTurnos || turnos.length>1">
+      <ion-row v-if="this.mostrarTurnos || turnos.length > 1">
         <ion-col size-lg="3" size-xs="12"> </ion-col>
         <ion-col size-lg="2" size-xs="12"><ion-text color="tertiary"><i>ID: DNI: Servicio: Profesional:</i></ion-text>
         </ion-col>
@@ -70,39 +70,80 @@
       <ion-row>
         <ion-col size-lg="3" size-xs="12"> </ion-col>
         <ion-col size-lg="6" size-xs="12">
-          <ion-list lines="full" v-for="e in turnos" :key="e.id">
-            <ion-item color="medium">
-           <p>    {{ e.id }} </p> 
-           <p>  {{ e.dniUsuario }} </p> 
-             {{ e.idServicio }} 
-             {{ e.dniProfesional }}
-               <b>     {{ e.fechaHora }}</b>
-                     {{ e.estado }}
-              <ion-button size="small" id="present-alert" class="button-modificar"
-                @click="confirmarEliminacion(e.id)">
+          <ion-item lines="full" v-for="e in turnos" :key="e.id">
+         
+
+              <ion-card color="medium">
+                <ion-card-header>
+                  <ion-card-title>Reserva {{ e.id }}</ion-card-title>
+                  <ion-card-subtitle>Dni {{ e.dniUsuario }}</ion-card-subtitle>
+                </ion-card-header>Servicio de {{ e.idServicio }} con {{ e.dniProfesional }}
                
-                 <p v-if="devWidth > 576">Eliminar</p>
-                
-                  <ion-icon :icon="trash"  :size="devWidth > 576 ? 'small' : 'large'" aria-label="Eliminar" color="danger"></ion-icon>
-    
-                
-                </ion-button> <!-- //id="delete-toast" -->
+
+                <ion-card-content>
+                  Fecha del turno es {{ e.fechaHora }} el estado es <b>{{ e.estado }}</b>
+                </ion-card-content>
+                <ion-button   size="small" id="present-alert" class="button-modificar" @click="confirmarEliminacion(e.id)">
+
+                  <p v-if="devWidth > 576">Eliminar</p>
+
+                  <ion-icon :icon="trash" :size="devWidth > 576 ? 'small' : 'large'" aria-label="Eliminar"
+                    color="danger"></ion-icon>
 
 
-              <ion-alert ref="Alert" trigger="present-alert" header="Esta seguro que desea eliminar el turno?" :buttons="alertButtons"
-                @didDismiss="setResult($event)" ></ion-alert>
+                 <!-- //id="delete-toast" -->
+
+
+                <ion-alert ref="alert" trigger="present-alert" header="Esta seguro que desea eliminar el turno?"
+                  :buttons="alertButtons" @didDismiss="setResult($event)"></ion-alert>
+                </ion-button>
+                <ion-toast color="primary" trigger="delete-toast" message="Hasta la vista turno! Lo hemos eliminado"
+                  :duration="3000" :icon="document"></ion-toast>
+
+
+                <ion-button  size="small" class="button-modificar" @click="redireccionTurno(e.id)">
+
+                  <p v-if="devWidth > 576">Modificar</p>
+                  <ion-icon :icon="build" aria-label="Modificar" :size="devWidth > 576 ? 'small' : 'large'"
+                    color="danger"></ion-icon>
+                </ion-button>
+          
+              </ion-card>
+
+
+
+         <!--      <p> {{ e.id }} </p>
+              <p> {{ e.dniUsuario }} </p>
+              {{ e.idServicio }}
+              {{ e.dniProfesional }}
+              <b> {{ e.fechaHora }}</b>
+              {{ e.estado }}
+              <ion-button size="small" id="present-alert" class="button-modificar" @click="confirmarEliminacion(e.id)">
+
+                <p v-if="devWidth > 576">Eliminar</p>
+
+                <ion-icon :icon="trash" :size="devWidth > 576 ? 'small' : 'large'" aria-label="Eliminar"
+                  color="danger"></ion-icon>
+
+
+              </ion-button>  
+
+
+              <ion-alert ref="Alert" trigger="present-alert" header="Esta seguro que desea eliminar el turno?"
+                :buttons="alertButtons" @didDismiss="setResult($event)"></ion-alert>
 
               <ion-toast color="primary" trigger="delete-toast" message="Hasta la vista turno! Lo hemos eliminado"
                 :duration="3000" :icon="document"></ion-toast>
 
 
               <ion-button size="small" class="button-modificar" @click="redireccionTurno(e.id)">
-             
-                 <p v-if="devWidth > 576" >Modificar</p>
-                    <ion-icon :icon="build" aria-label="Modificar" :size="devWidth > 576 ? 'small' : 'large'" color="danger"></ion-icon> 
-                </ion-button>
 
-            </ion-item></ion-list> </ion-col>
+                <p v-if="devWidth > 576">Modificar</p>
+                <ion-icon :icon="build" aria-label="Modificar" :size="devWidth > 576 ? 'small' : 'large'"
+                  color="danger"></ion-icon>
+              </ion-button> -->
+
+          </ion-item> </ion-col>
 
         <ion-col size-lg="2" size-xs="0"></ion-col>
       </ion-row>
@@ -117,7 +158,7 @@
 </template>
 
 <script>
-import { IonPage,IonIcon, IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow } from "@ionic/vue";
+import { IonPage, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon, IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow } from "@ionic/vue";
 import turnosService from '../services/turnosService'
 import { storeToRefs } from "pinia";
 import { useLoginStore } from "../stores/login";
@@ -125,12 +166,12 @@ import { document } from 'ionicons/icons';
 import serviciosService from '../services/serviciosService'
 import empleadosService from '../services/empleadosService'
 import { ref } from 'vue';
-import {  trash, person,build } from 'ionicons/icons'
+import { trash, person, build } from 'ionicons/icons'
 
 
 
 export default {
-  components: { IonPage, IonIcon,IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow },
+  components: { IonPage, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon, IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow },
   setup() {
     const handlerMessage = ref('');
     const roleMessage = ref('');
@@ -167,10 +208,10 @@ export default {
       alertButtons,
       setResult,
       devWidth: 0,
-      person,trash,build
+      person, trash, build
     }
   },
-   mounted() {
+  mounted() {
     this.listarServicios()
     this.listarEmpleados()
     this.devWidth = window.innerWidth;
@@ -179,14 +220,14 @@ export default {
   beforeDestroy() {
     window.removeEventListener('resize', this.handleResize);
   },
-  
+
   methods: {
     irAHome() {
       this.$router.push("/");
 
     }, handleResize() {
       this.devWidth = window.innerWidth;
-    } ,
+    },
     async listarServicios() {
       try {
         this.servicios = await serviciosService.listarServicios()
@@ -205,7 +246,7 @@ export default {
     confirmarEliminacion(idTurno) {
       this.turnoSeleccionado = idTurno;
       console.log(this.turnoSeleccionado)
-      this.$refs.alert.present();
+     
     },
     setResult(ev) {
       if (ev.detail.role === 'confirm') {
@@ -249,7 +290,7 @@ export default {
 
 
         const todosTurnos = await turnosService.listarTurnos()
-        this.turnos = todosTurnos.filter(elemento => elemento.dniUsuario == this.user.dni)
+        this.turnos =  todosTurnos.filter(elemento => elemento.dniUsuario == this.user.dni)
         this.mostrarTurnos = true;
 
       } catch (e) {
@@ -357,5 +398,4 @@ export default {
   will-change: box-shadow, transform;
   touch-action: manipulation;
 }
-  
 </style>
