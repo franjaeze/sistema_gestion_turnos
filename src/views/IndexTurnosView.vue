@@ -9,7 +9,7 @@
           <ion-button class="button-50" id="grande" v-if="!isAdmin" @click="misTurnos">Mis turnos</ion-button>
           <ion-button class="button-50" v-if="isAdmin" @click="listarTurnos">Listar turnos</ion-button>
           <ion-button v-if="isAdmin" class="button-50" @click="mostarForm">Agregar turno</ion-button>
-          <ion-button v-show="!mostrar" class="button-50" @click="mostarForm">Sacar turno</ion-button>
+          <ion-button v-show="!mostrar"  v-if="!isAdmin" class="button-50" @click="mostarForm">Sacar turno</ion-button>
           <ion-button v-show="mostrar" class="button-50" @click="mostrar = !mostrar">Cancelar</ion-button>
           <ion-button class='button-50' @click="irAHome">Ir a home</ion-button>
 
@@ -83,19 +83,13 @@
                 <ion-card-content>
                   Fecha del turno es {{ e.fechaHora }} el estado es <b>{{ e.estado }}</b>
                 </ion-card-content>
-                <ion-button   size="small" id="present-alert" class="button-modificar" @click="confirmarEliminacion(e.id)">
+                <ion-button   size="small" id="delete-toast" class="button-modificar" @click="eliminarTurno(e.id)">
 
                   <p v-if="devWidth > 576">Eliminar</p>
 
                   <ion-icon :icon="trash" :size="devWidth > 576 ? 'small' : 'large'" aria-label="Eliminar"
                     color="danger"></ion-icon>
-
-
-                 <!-- //id="delete-toast" -->
-
-
-                <ion-alert ref="alert" trigger="present-alert" header="Esta seguro que desea eliminar el turno?"
-                  :buttons="alertButtons" @didDismiss="setResult($event)"></ion-alert>
+         
                 </ion-button>
                 <ion-toast color="primary" trigger="delete-toast" message="Hasta la vista turno! Lo hemos eliminado"
                   :duration="3000" :icon="document"></ion-toast>
@@ -173,40 +167,16 @@ import { trash, person, build } from 'ionicons/icons'
 export default {
   components: { IonPage, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon, IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow },
   setup() {
-    const handlerMessage = ref('');
-    const roleMessage = ref('');
+
     const store = useLoginStore();
     const { isLogin, isAdmin, user } = storeToRefs(store);
 
-    const alertButtons = [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        handler: () => {
-          handlerMessage.value = 'Alert canceled';
-        },
-      },
-      {
-        text: 'OK',
-        role: 'confirm',
-        handler: () => {
-          handlerMessage.value = 'Alert confirmed';
-        },
-      },
-    ];
-
-    const setResult = (ev) => {
-      roleMessage.value = `Dismissed with role: ${ev.detail.role}`;
-    };
+   
     return {
       isLogin,
       isAdmin,
       user,
       document,
-      handlerMessage,
-      roleMessage,
-      alertButtons,
-      setResult,
       devWidth: 0,
       person, trash, build
     }
@@ -243,20 +213,7 @@ export default {
         alert("Se produjo un error");
       }
     },
-    confirmarEliminacion(idTurno) {
-      this.turnoSeleccionado = idTurno;
-      console.log(this.turnoSeleccionado)
-     
-    },
-    setResult(ev) {
-      if (ev.detail.role === 'confirm') {
-        this.eliminarTurno(this.turnoSeleccionado);
-        console.log(this.turnoSeleccionado)
-      }
-    },
-
-
-
+       
     async agregarALista() {
 
       try {
@@ -270,11 +227,7 @@ export default {
         alert(e);
       }
     },
-    //ordenarLista() {
-    //this.lista.sort((a, b) => a.id - b.id);
-    // },
-
-    ///servicios/:id delete
+ 
     async listarTurnos() {
       try {
 
@@ -319,17 +272,17 @@ export default {
     },
     mostarForm() {
       if (this.mostrar == true) {
-        console.log("seteo en false")
+       
         this.mostar = false;
       } else {
-        console.log("seteo en true")
+       
         this.mostrar = true;
       }
 
 
     },
     ocultar() {
-      console.log('estoy intentando ocultar')
+     
       this.mostrar = false;
     },
 

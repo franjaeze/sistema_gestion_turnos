@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content>
-  
+
       <ion-grid class="">
         <ion-row>
           <ion-col size-lg="3" size-sm="12">
@@ -10,8 +10,8 @@
 
             <ion-button class="button-50" v-show="!admin" @click="mostrarForm">Agregar Empleado </ion-button>
             <ion-button class="button-50" v-show="!admin" @click="mostrarEmpleados">Listar Empleados</ion-button>
-            <ion-button v-show="!mostrar" class="button-50" @click="mostarForm">Agregar turno</ion-button>
             <ion-button v-show="mostrar" class="button-50" @click="mostrar = !mostrar">Cancelar</ion-button>
+
             <ion-button class='button-50' @click="irAHome">Ir a home</ion-button>
 
             <!--     FORM PARA AGREGAR EMPLEADOS  ----->
@@ -37,39 +37,39 @@
               <ion-select class="margin3" v-model="empleadoNuevo.tipoServicio" interface="popover" label="Servicio"
                 placeholder="Servicio" color="warning" fill="outline" required="true" :multiple="true">
                 <ion-select-option v-for="e in servicios" :value="e.nombre"> {{ e.nombre }}
-                </ion-select-option> 
+                </ion-select-option>
               </ion-select>
 
               <ion-button class="button-50" @click="agregarALista">Agregar Empleado</ion-button>
             </ion-list>
-          
-              <!--     LISTAR EMPLEADOS ----->
 
-              <ion-item lines="full"   v-for="e in empleados" :key="e.dni">
+            <!--     LISTAR EMPLEADOS ----->
+
+            <ion-item lines="full" v-for="e in empleados" :key="e.dni">
               <ion-card color="medium">
                 <ion-card-header>
                   <ion-card-title> {{ e.nombre }} {{ e.apellido }}</ion-card-title>
-                  <ion-card-subtitle>Dni {{ e.dni }}  email: {{ e.email }}  </ion-card-subtitle>
+                  <ion-card-subtitle>Dni {{ e.dni }} email: {{ e.email }} </ion-card-subtitle>
                 </ion-card-header>Ingreso {{ e.fechaIngreso }} Estado {{ e.estado }}
-                      Fecha de nacimento {{ e.fechaNacimiento }}
+                Fecha de nacimento {{ e.fechaNacimiento }}
 
-                <ion-card-content>Tipo de servicio que realiza: 
-                 <ion-text  v-for="t in e.tipoServicio" :key="e.tipoServicio"> - {{ t }}<p>.  </p> </ion-text> 
+                <ion-card-content>Tipo de servicio que realiza:
+                  <ion-text v-for="t in e.tipoServicio" :key="e.tipoServicio"> - {{ t }}<p>. </p> </ion-text>
                 </ion-card-content>
-                <ion-button size="small" id="present-alert" class="button-modificar" @click="">
+                <ion-button size="small" id="present-alert" class="button-modificar" @click="eliminarEmpleado(e.id)">
                   Eliminar
                 </ion-button>
                 <ion-button size="small" class="button-modificar" @click="">
                   Modificar
-                  
+
                 </ion-button>
 
               </ion-card>
 
-                </ion-item>
+            </ion-item>
 
 
-          
+
           </ion-col>
           <ion-col size-lg="2" size-sm="0"></ion-col>
         </ion-row></ion-grid>
@@ -87,7 +87,7 @@ import serviciosService from '../services/serviciosService'
 import empleadosService from '../services/empleadosService'
 
 export default {
-  components: { IonPage, IonText,IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonContent, IonList, IonItem, IonCol, IonGrid, IonRow, IonSelect, IonSelectOption, IonInput, IonDatetime, },
+  components: { IonPage, IonText, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonContent, IonList, IonItem, IonCol, IonGrid, IonRow, IonSelect, IonSelectOption, IonInput, IonDatetime, },
   setup() {
     const store = useLoginStore();
     const { user } = storeToRefs(store);
@@ -138,7 +138,18 @@ export default {
     mostrarEmpleados() {
 
       this.mostrarLista = !this.mostrarLista;
-}
+    }, 
+      async eliminarEmpleado(id) {
+      try {
+        console.log(id)
+        await empleadosService.eliminarEmpleado(id)
+        this.listarEmpleados();
+       
+      } catch (e) {
+        alert("Se produjo un error");
+      }
+
+    }
   },
   data() {
     return {

@@ -17,10 +17,41 @@
           <ion-col size-lg="2" size-xs="12">
           </ion-col>
           <ion-col size-lg="8" size-xs="12">
-            <ion-button class="button-50" v-if="isAdmin" v-show="!mostrar" @click="mostrarForm()">Agregar Servicio
+            <ion-button class="button-50" v-if="isAdmin && !mostrar"  @click="mostrarForm">Agregar Servicio
             </ion-button>
-            <ion-button class="button-50" v-if="isAdmin" @click="listarTurnos"></ion-button>
-            <ion-item v-show="mostrar"> <ion-list class="lista">
+
+
+            <!--     FORM PARA AGREGAR SERVICIO  ----->
+           
+            <ion-list class="lista" v-show="this.mostrar"> 
+                  <h1> Agregar Servicio</h1>
+              <ion-input class="margin3" v-model="servicioNuevo.nombre" color="warning" fill="outline"
+                label-placement="floating" label="nombre" required="true"> </ion-input>
+              <ion-select class="margin3" v-model="servicioNuevo.duracion" color="warning" fill="outline"
+                label-placement="floating" label="duracion" required="true">
+                <ion-select-option value="30" >30 min</ion-select-option>
+                  <ion-select-option value="45">45 min</ion-select-option>
+                  <ion-select-option value="60">60 min</ion-select-option>
+              </ion-select>
+              <ion-input class="margin3" v-model="servicioNuevo.valor" color="warning" fill="outline"
+                label-placement="floating" label="valor" required="true"> </ion-input>
+              <ion-input class="margin3" v-model="servicioNuevo.detalle" color="warning" fill="outline"
+                label-placement="floating" label="detalle" required="true"> </ion-input>
+ 
+              <ion-select class="margin3" v-model="servicioNuevo.tipoServicio" interface="popover" label="Servicio"
+                placeholder="Servicio" color="warning" fill="outline" required="true"  >
+                <ion-select-option value="masaje" >Masaje</ion-select-option>
+                  <ion-select-option value="tratamiento">Tratamiento</ion-select-option>
+                  <ion-select-option value="manicura">Manicura</ion-select-option>
+              </ion-select>
+
+              <ion-button class="button-50" @click="agregarALista">Agregar Servicio</ion-button>
+            </ion-list>
+
+
+            <!--     LISTAR SERVICIOS  ----->
+
+          <!--   <ion-item v-show="mostrar"> <ion-list class="lista">
                 <ion-input class="margin3" v-model="nuevoServicio.nombre" color="warning" fill="outline"
                   label-placement="floating" label="nombre" :required="true"> </ion-input>
                 <ion-input class="margin3" v-model="nuevoServicio.duracion" interface="popover" label="duracion"
@@ -34,7 +65,7 @@
                 <ion-button class="button-50" id="open-toast" @click="agregarServicio()">Agregar servicio</ion-button>
                 <ion-col size-lg="2" size-xs="12"></ion-col>
               </ion-list>
-            </ion-item>
+            </ion-item> -->
 
             <ion-card v-for="e in servicios" :key="e.tipoServicio">
               <ion-card-content><ion-card-title> {{ e.nombre }} </ion-card-title>
@@ -42,7 +73,8 @@
                 detalle: {{ e.detalle }}
                 <ion-card-subtitle color="danger"> Valor: {{ e.valor }} Duracion: {{ e.duracion }}
                   <ion-button class="button-modificar" v-if="isAdmin" @click="listarTurnos">Modificar</ion-button>
-                  <ion-button class="button-modificar" v-if="isAdmin" @click="listarTurnos">Eliminar</ion-button>
+                  <ion-button class="button-modificar" v-if="isAdmin"
+                    @click="eliminarServicio(e.id)">Eliminar</ion-button>
                 </ion-card-subtitle>
               </ion-card-content>
 
@@ -60,9 +92,9 @@
 import { storeToRefs } from "pinia";
 import { useLoginStore } from "../stores/login";
 import serviciosService from '../services/serviciosService'
-import { IonPage, IonContent, IonInput, IonGrid, IonCol, IonRow, IonButton, IonCard, IonList, IonItem, IonThumbnail, IonLabel, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/vue'
+import { IonPage, IonContent,IonSelect,IonSelectOption, IonInput, IonGrid, IonCol, IonRow, IonButton, IonCard, IonList, IonItem, IonThumbnail, IonLabel, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/vue'
 export default {
-  components: { IonPage, IonButton, IonInput, IonContent, IonGrid, IonCol, IonRow, IonList, IonCard, IonThumbnail, IonLabel, IonItem, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle }
+  components: { IonPage, IonButton,IonSelect,IonSelectOption,  IonInput, IonContent, IonGrid, IonCol, IonRow, IonList, IonCard, IonThumbnail, IonLabel, IonItem, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle }
   , setup() {
     const store = useLoginStore();
     const { isLogin, isAdmin, user } = storeToRefs(store);
@@ -70,8 +102,7 @@ export default {
     return {
       isLogin,
       isAdmin,
-      user,
-      mostrar: false
+      user
     };
   },
 
@@ -79,7 +110,8 @@ export default {
     return {
       masajes: [],
       servicios: [],
-      nuevoServicio: { nombre: "", duracion: "", valor: "", detalle: "", tipoServicio: "" },
+      mostrar: false,
+      servicioNuevo: { nombre: "", duracion: "", valor: "", detalle: "", tipoServicio: "" },
       page: 1
     }
   }, mounted() {
@@ -95,14 +127,38 @@ export default {
         alert("Se produjo un error");
       }
     },
-    mostrarForm() {
-      this.mostrar = true;
-      console.log(this.mostrar)
-    },
     agregarServicio() {
       this.mostrar = false;
       console.log(this.mostrar)
-    }
+    },
+
+    async eliminarServicio(id) {
+      try {
+        console.log(id)
+        await serviciosService.eliminarServicio(id)
+
+      } catch (e) {
+        alert("Se produjo un error");
+      }
+
+    },
+    async agregarALista() {
+
+try {
+  console.log("estoy agregando ")
+  await serviciosService.agregarAListaServicio(this.servicioNuevo)
+
+  this.mostrarForm(); // ver porque no me funcionaba poniendo el metodo ocultar() aqui
+  console.log(this.mostrar)
+} catch (e) {
+  alert(e);
+}
+},
+mostrarForm() {
+
+this.mostrar = !this.mostrar;
+console.log(this.mostrar)
+},
   }
 
 }
