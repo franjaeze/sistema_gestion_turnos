@@ -46,32 +46,18 @@
               </ion-select>
 
               <ion-button class="button-50" @click="agregarALista">Agregar Servicio</ion-button>
+              <ion-button class="button-50" @click="mostrarForm">Cancelar</ion-button>
+           
             </ion-list>
 
 
-            <!--     LISTAR SERVICIOS  ----->
-
-          <!--   <ion-item v-show="mostrar"> <ion-list class="lista">
-                <ion-input class="margin3" v-model="nuevoServicio.nombre" color="warning" fill="outline"
-                  label-placement="floating" label="nombre" :required="true"> </ion-input>
-                <ion-input class="margin3" v-model="nuevoServicio.duracion" interface="popover" label="duracion"
-                  color="warning" fill="outline" :required="true"></ion-input>
-                <ion-input class="margin3" v-model="nuevoServicio.valor" interface="popover" label="valor" color="warning"
-                  fill="outline" :required="true"> </ion-input>
-                <ion-input class="margin3" v-model="nuevoServicio.detalle" color="warning" label-placement="floating"
-                  fill="outline" label="detalle"></ion-input>
-                <ion-input class="margin3" v-model="nuevoServicio.tipoServicio" color="warning" label-placement="floating"
-                  fill="outline" label="tipoServicio"></ion-input>
-                <ion-button class="button-50" id="open-toast" @click="agregarServicio()">Agregar servicio</ion-button>
-                <ion-col size-lg="2" size-xs="12"></ion-col>
-              </ion-list>
-            </ion-item> -->
+            <!--  LISTAR SERVICIOS -->
 
             <ion-card v-for="e in servicios" :key="e.tipoServicio">
               <ion-card-content><ion-card-title> {{ e.nombre }} </ion-card-title>
 
-                detalle: {{ e.detalle }}
-                <ion-card-subtitle color="danger"> Valor: {{ e.valor }} Duracion: {{ e.duracion }}
+               {{ e.detalle }}
+                <ion-card-subtitle color="danger"> Valor: <b>{{ e.valor }}</b> Duracion: <b>{{ e.duracion }}</b>
                   <ion-button class="button-modificar" v-if="isAdmin" @click="listarTurnos">Modificar</ion-button>
                   <ion-button class="button-modificar" v-if="isAdmin"
                     @click="eliminarServicio(e.id)">Eliminar</ion-button>
@@ -136,6 +122,7 @@ export default {
       try {
         console.log(id)
         await serviciosService.eliminarServicio(id)
+        await this.listarServicios()
 
       } catch (e) {
         alert("Se produjo un error");

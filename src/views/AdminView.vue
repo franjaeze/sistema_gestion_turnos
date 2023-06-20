@@ -4,9 +4,9 @@
 
       <ion-grid class="">
         <ion-row>
-          <ion-col size-lg="3" size-sm="12">
+          <ion-col size-lg="3" size-xs="12">
           </ion-col>
-          <ion-col size-lg="6" size-sm="12">
+          <ion-col size-lg="6" size-xs="12">
 
             <ion-button class="button-50" v-show="!admin" @click="mostrarForm">Agregar Empleado </ion-button>
             <ion-button class="button-50" v-show="!admin" @click="mostrarEmpleados">Listar Empleados</ion-button>
@@ -41,19 +41,20 @@
               </ion-select>
 
               <ion-button class="button-50" @click="agregarALista">Agregar Empleado</ion-button>
+              <ion-button class="button-50" @click="mostrarForm">Cancelar</ion-button>
             </ion-list>
 
             <!--     LISTAR EMPLEADOS ----->
 
             <ion-item lines="full" v-for="e in empleados" :key="e.dni">
-              <ion-card color="medium">
+              <ion-card class="carta" color="medium">
                 <ion-card-header>
                   <ion-card-title> {{ e.nombre }} {{ e.apellido }}</ion-card-title>
-                  <ion-card-subtitle>Dni {{ e.dni }} email: {{ e.email }} </ion-card-subtitle>
-                </ion-card-header>Ingreso {{ e.fechaIngreso }} Estado {{ e.estado }}
-                Fecha de nacimento {{ e.fechaNacimiento }}
+                  <ion-card-subtitle> <b>Dni</b> {{ e.dni }} <b>email: </b>{{ e.email }} </ion-card-subtitle>
+                </ion-card-header><span class="ident"></span><b>Ingreso </b>{{ e.fechaIngreso }} <b>Estado </b>{{ e.estado }}
+                <b>Fecha de nacimento</b> {{ e.fechaNacimiento }}
 
-                <ion-card-content>Tipo de servicio que realiza:
+                <ion-card-content><b>Servicios que realiza:</b>
                   <ion-text v-for="t in e.tipoServicio" :key="e.tipoServicio"> - {{ t }}<p>. </p> </ion-text>
                 </ion-card-content>
                 <ion-button size="small" id="present-alert" class="button-modificar" @click="eliminarEmpleado(e.id)">
@@ -71,7 +72,7 @@
 
 
           </ion-col>
-          <ion-col size-lg="2" size-sm="0"></ion-col>
+          <ion-col size-lg="2" size-xs="0"></ion-col>
         </ion-row></ion-grid>
 
     </ion-content>
@@ -168,5 +169,10 @@ export default {
   ;
 </script>
   
-<style></style>
+<style>
+.ident{
+  margin-left: 15px;
+}
+
+</style>
   

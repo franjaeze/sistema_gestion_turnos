@@ -59,29 +59,20 @@
 
 
     <ion-grid>
-      <ion-row v-if="this.mostrarTurnos || turnos.length > 1">
-        <ion-col size-lg="3" size-xs="12"> </ion-col>
-        <ion-col size-lg="2" size-xs="12"><ion-text color="tertiary"><i>ID: DNI: Servicio: Profesional:</i></ion-text>
-        </ion-col>
-        <ion-col size-lg="1" size-xs="12"><ion-text color="tertiary"> Fecha y hora: </ion-text></ion-col>
-        <ion-col size-lg="2" size-xs="12"><ion-text color="tertiary"> Estado </ion-text></ion-col>
-        <ion-col size-lg="3" size-xs="12"></ion-col>
-      </ion-row>
-      <ion-row>
+         <ion-row>
         <ion-col size-lg="3" size-xs="12"> </ion-col>
         <ion-col size-lg="6" size-xs="12">
           <ion-item lines="full" v-for="e in turnos" :key="e.id">
          
 
-              <ion-card color="medium">
+              <ion-card class="carta" color="medium">
                 <ion-card-header>
-                  <ion-card-title>Reserva {{ e.id }}</ion-card-title>
-                  <ion-card-subtitle>Dni {{ e.dniUsuario }}</ion-card-subtitle>
-                </ion-card-header>Servicio de {{ e.idServicio }} con {{ e.dniProfesional }}
-               
-
+                  <ion-card-title class="fecha">Fecha  {{ e.fechaHora }}</ion-card-title>
+                  <ion-card-subtitle>Dni <b>{{ e.dniUsuario }}</b></ion-card-subtitle>
+                </ion-card-header> <span class="ident"></span> Servicio de <b>{{ e.idServicio }}</b> con <b>{{ e.dniProfesional }}</b>
+              
                 <ion-card-content>
-                  Fecha del turno es {{ e.fechaHora }} el estado es <b>{{ e.estado }}</b>
+                   Reserva <b>{{ e.id }} </b> Estado es <b>{{ e.estado }}</b>
                 </ion-card-content>
                 <ion-button   size="small" id="delete-toast" class="button-modificar" @click="eliminarTurno(e.id)">
 
@@ -350,5 +341,12 @@ export default {
   transition: box-shadow .15s, transform .15s;
   will-change: box-shadow, transform;
   touch-action: manipulation;
+}
+
+
+
+.fecha{
+  text-shadow: #553a00;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 </style>
