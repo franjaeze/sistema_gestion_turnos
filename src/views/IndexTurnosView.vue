@@ -67,7 +67,7 @@
               <ion-row>
                 <ion-col size="11">
                   <ion-card-header>
-                    <ion-card-title class="fecha">Fecha:   <p class="fecha">{{ }}</p></ion-card-title>
+                    <ion-card-title class="fecha">Fecha:   <p class="fecha">{{ presentarFecha(e.fechaHora)}}</p></ion-card-title>
                     <ion-card-subtitle>Dni <b>{{ e.dniUsuario }}</b></ion-card-subtitle>
                   </ion-card-header> <span class="ident"></span> Servicio de <b>{{ e.idServicio }}</b> con <b>{{
                     e.dniProfesional }}</b>
