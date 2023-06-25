@@ -60,8 +60,15 @@
   color: #edeceb;
   text-shadow: 0px 0px 5px #777141, 0px 0px 10px #c1ab6ad9, 0px 0px 10px #c3a463,
     0px 0px 20px #a57229;
+
+  transition: transform 0.3s, color 0.3s;
 }
 
+.titulazo:hover{
+  transform: translateY(-10px);
+  color: #ccc8c8;
+  
+}
 .toasted {
   box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
   box-sizing: border-box;
@@ -328,10 +335,8 @@ ion-toast {
 
 .carta{
   padding: 7px 18px 18px 18px ;
-  
-  border-style: double;
-  border-color: #553a00;
+ 
 }
-.ident{
+.ident{             
   margin-left: 15px;
 }

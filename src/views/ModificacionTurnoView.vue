@@ -11,15 +11,12 @@
           <!-- <ion-input v-model="turnoModificado.dniEmpleadoRegistro" color="warning" label="Empleado registró" fill="outline" :value="turnoModificado.dniEmpleadoRegistro" readonly></ion-input> -->
           <ion-select v-model="turnoModificado.idServicio" interface="popover" label="Servicio" placeholder="Servicio"
             color="warning" fill="outline" :value="turnoModificado.idServicio">
-            <ion-select-option value="Manicura">Manicura</ion-select-option>
-            <ion-select-option value="Pedicura">Pedicura</ion-select-option>
-            <ion-select-option value="Masajes">Masajes</ion-select-option>
+            <ion-select-option v-for="e in servicios" :value="e.nombre"> {{ e.nombre }}</ion-select-option>
           </ion-select>
           <ion-select v-model="turnoModificado.dniProfesional" interface="popover" label="Profesional"
             placeholder="Profesional" color="warning" fill="outline">
-            <ion-select-option value="Marina Gutierrez">Marina Gutierrez</ion-select-option>
-            <ion-select-option value="Natalia Lobos">Natalia Lobos</ion-select-option>
-            <ion-select-option value="Juana Di Arcquette">Juana Di Arcquett</ion-select-option>
+            <ion-select-option v-for="e in empleados" :value="e.nombre"> {{ e.nombre }} {{ e.apellido
+              }}</ion-select-option>
           </ion-select>
           <ion-input v-model="turnoModificado.fechaHora" color="warning" label="Fecha y hora del turno" fill="outline"
             type="datetime-local"></ion-input>
@@ -41,6 +38,8 @@ import { IonPage, IonButton, IonContent, IonInput, IonSelect, IonList, IonItem, 
 import axios from "axios";
 import turnosService from "../services/turnosService";
 import { document } from 'ionicons/icons';
+import serviciosService from '../services/serviciosService'
+import empleadosService from '../services/empleadosService'
 
 export default {
   components: { IonPage, IonButton, IonContent, IonInput, IonSelect, IonList, IonItem, IonSelectOption,IonToast },
@@ -54,6 +53,8 @@ export default {
     return {
       statementIsTrue: true,
       idTurno: this.$route.params.id,
+      servicios: [],
+      empleados: [],  
       turnoSeleccionado: { dniUsuario: "", idServicio: "", dniProfesional: "", fechaHora: "", estado: "" },
       turnoModificado: { dniUsuario: "", idServicio: "", dniProfesional: "", fechaHora: "", estado: "" },
     };
@@ -61,8 +62,11 @@ export default {
 
 
   async mounted() {
+   this.listarServicios(),
+    this.listarEmpleados(),
     (this.turnoSeleccionado.id = this.$route.params.id),
       await this.actualizarInfo(this.turnoSeleccionado.id);
+      console.log(this.turnoSeleccionado)
   },
 
   methods: {
@@ -70,6 +74,21 @@ export default {
       const response = await axios.get("https://646beae07b42c06c3b2a949b.mockapi.io/turnos");
       this.turnoSeleccionado = response.data.filter(elemento => elemento.id === this.idTurno)[0];
       this.turnoModificado = { ...this.turnoSeleccionado }
+    },
+     async listarServicios() {
+      try {
+        this.servicios = await serviciosService.listarServicios()
+
+      } catch (e) {
+        alert("Se produjo un error");
+      }
+    }, async listarEmpleados() {
+      try {
+        this.empleados = await empleadosService.listarEmpleados()
+
+      } catch (e) {
+        alert("Se produjo un error");
+      }
     },
     async modificarTurno(id) {
       try {

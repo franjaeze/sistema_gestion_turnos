@@ -14,7 +14,7 @@ export default {
       <ion-grid>
         <ion-row>
           <ion-col></ion-col>
-          <ion-col size-md="8"> <ion-header class="titulazo">
+          <ion-col size-md="8"> <ion-header class="titulazo animation">
               Un tratamiento para cada necesidad
             </ion-header>
           </ion-col>
@@ -22,10 +22,10 @@ export default {
         </ion-row>
         <ion-row>
         <ion-col size-md="2"></ion-col>
-        <ion-col size-md="4"> <img class="imagen" src="../assets/velas.jpg" alt="candles"></ion-col>
+        <ion-col size-md="4">  <img class="imagen" src="../assets/velas.jpg" alt="candles"> </ion-col>
           <ion-col size-md="4"> 
           
-              <h1>Siguiendo de cerca la tendencia mundial en Dermatología y Medicina Estética brindamos a nuestros pacientes
+              <h1 class=" ">Siguiendo de cerca la tendencia mundial en Dermatología y Medicina Estética brindamos a nuestros pacientes
               la mejor y más personalizada atención.  </h1></ion-col>         
           <ion-col size-md="2"></ion-col>
         </ion-row>
@@ -113,7 +113,52 @@ h1 {
 }
 
 .imagen {
-  max-width: 500px;
+  max-width:500px;
   opacity: 0.9;
+  transition: all 1.1s ;
+  background-size: cover;
+  overflow: hidden;
+ 
+}
+.imagen:hover {
+  
+/*   transform: scale(1.2); */
+transform: scale(2.8);
+translate:  100px;
+
+}
+
+.animation{
+
+  animation: movimiento 2s;
+}
+
+@keyframes movimiento {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  
+  100% {
+    transform: scale(1);
+  }
+}
+.latido{
+animation:  algo 3s  ;
+}
+
+
+@keyframes algo {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  60%{
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>

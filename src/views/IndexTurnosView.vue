@@ -6,10 +6,11 @@
         </ion-col>
         <ion-col size-lg="6" size-xs="12">
 
-          <ion-button class="button-50" id="grande" v-if="!isAdmin" @click="misTurnos">Mis turnos</ion-button>
+          <ion-button   class="button-50" id="grande" v-if="!isAdmin" @click="misTurnos">Mis
+            turnos</ion-button>
           <ion-button class="button-50" v-if="isAdmin" @click="listarTurnos">Listar turnos</ion-button>
           <ion-button v-if="isAdmin" class="button-50" @click="mostarForm">Agregar turno</ion-button>
-          <ion-button v-show="!mostrar"  v-if="!isAdmin" class="button-50" @click="mostarForm">Sacar turno</ion-button>
+          <ion-button v-show="!mostrar" v-if="!isAdmin" class="button-50" @click="mostarForm">Sacar turno</ion-button>
           <ion-button v-show="mostrar" class="button-50" @click="mostrar = !mostrar">Cancelar</ion-button>
           <ion-button class='button-50' @click="irAHome">Ir a home</ion-button>
 
@@ -22,19 +23,16 @@
 
             <ion-select class="margin3" v-model="turnoSeleccionado.idServicio" interface="popover" label="Servicio"
               placeholder="Servicio" color="warning" fill="outline" required="true">
-               <ion-select-option v-for="e in servicios" :value="e.nombre"> {{ e.nombre }}</ion-select-option>
-              <!--  <ion-select-option value="Pedicura">Pedicura</ion-select-option>
-        <ion-select-option value="Masajes">Masajes</ion-select-option> -->
+              <ion-select-option v-for="e in servicios" :value="e.nombre"> {{ e.nombre }}</ion-select-option>
+ 
             </ion-select>
 
-            <!-- <ion-input  v-model="turnoSeleccionado.dniProfesional" color ="warning" label-placement="floating"  fill="outline" label="Profesional" ></ion-input> -->
 
             <ion-select class="margin3" v-model="turnoSeleccionado.dniProfesional" interface="popover" label="Profesional"
               placeholder="Profesional" color="warning" fill="outline" required="true">
               <ion-select-option v-for="e in empleados" :value="e.nombre"> {{ e.nombre }} {{ e.apellido
               }}</ion-select-option>
-              <!--     <ion-select-option value="Natalia Lobos">Natalia Lobos</ion-select-option>
-              <ion-select-option value="Juana Di Arcquette">Juana Di Arcquett</ion-select-option> -->
+             
             </ion-select>
 
             <section class="centrado"><ion-datetime class="datetime" v-model="turnoSeleccionado.fechaHora"
@@ -59,75 +57,42 @@
 
 
     <ion-grid>
-         <ion-row>
+      <ion-row>
         <ion-col size-lg="3" size-xs="12"> </ion-col>
         <ion-col size-lg="6" size-xs="12">
           <ion-item lines="full" v-for="e in turnos" :key="e.id">
-         
-
-              <ion-card class="carta" color="medium">
-                <ion-card-header>
-                  <ion-card-title class="fecha">Fecha  {{ e.fechaHora }}</ion-card-title>
-                  <ion-card-subtitle>Dni <b>{{ e.dniUsuario }}</b></ion-card-subtitle>
-                </ion-card-header> <span class="ident"></span> Servicio de <b>{{ e.idServicio }}</b> con <b>{{ e.dniProfesional }}</b>
-              
-                <ion-card-content>
-                   Reserva <b>{{ e.id }} </b> Estado es <b>{{ e.estado }}</b>
-                </ion-card-content>
-                <ion-button   size="small" id="delete-toast" class="button-modificar" @click="eliminarTurno(e.id)">
-
-                  <p v-if="devWidth > 576">Eliminar</p>
-
-                  <ion-icon :icon="trash" :size="devWidth > 576 ? 'small' : 'large'" aria-label="Eliminar"
-                    color="danger"></ion-icon>
-         
-                </ion-button>
-                <ion-toast color="primary" trigger="delete-toast" message="Hasta la vista turno! Lo hemos eliminado"
-                  :duration="3000" :icon="document"></ion-toast>
 
 
-                <ion-button  size="small" class="button-modificar" @click="redireccionTurno(e.id)">
+            <ion-card class="carta" color="medium">
+              <ion-row>
+                <ion-col size="11">
+                  <ion-card-header>
+                    <ion-card-title class="fecha">Fecha:   <p class="fecha">{{ }}</p></ion-card-title>
+                    <ion-card-subtitle>Dni <b>{{ e.dniUsuario }}</b></ion-card-subtitle>
+                  </ion-card-header> <span class="ident"></span> Servicio de <b>{{ e.idServicio }}</b> con <b>{{
+                    e.dniProfesional }}</b>
 
-                  <p v-if="devWidth > 576">Modificar</p>
-                  <ion-icon :icon="build" aria-label="Modificar" :size="devWidth > 576 ? 'small' : 'large'"
-                    color="danger"></ion-icon>
-                </ion-button>
-          
-              </ion-card>
+                  <ion-card-content>
+                    Reserva <b>{{ e.id }} </b> Estado es <b>{{ e.estado }}</b>
+                  </ion-card-content>
+                </ion-col>
+                <ion-col size="1">
 
+                  <span class="cursor" id="delete-toast" @click="eliminarTurno(e.id)">     <ion-icon  :icon="trash" :size="devWidth > 576 ? 'small' : 'large'" aria-label="Eliminar"
+                      color="danger"></ion-icon>     </span>
+                
+                  <ion-toast color="primary" trigger="delete-toast" message="Hasta la vista turno! Lo hemos eliminado"
+                    :duration="3000" :icon="document"></ion-toast>
 
+                    <span  class="cursor"  @click="redireccionTurno(e.id)"><ion-icon :icon="build" aria-label="Modificar" :size="devWidth > 576 ? 'small' : 'large'"
+                      color="danger"></ion-icon></span>
+ 
+  
+                 </ion-col>
+              </ion-row>
+            </ion-card>
 
-         <!--      <p> {{ e.id }} </p>
-              <p> {{ e.dniUsuario }} </p>
-              {{ e.idServicio }}
-              {{ e.dniProfesional }}
-              <b> {{ e.fechaHora }}</b>
-              {{ e.estado }}
-              <ion-button size="small" id="present-alert" class="button-modificar" @click="confirmarEliminacion(e.id)">
-
-                <p v-if="devWidth > 576">Eliminar</p>
-
-                <ion-icon :icon="trash" :size="devWidth > 576 ? 'small' : 'large'" aria-label="Eliminar"
-                  color="danger"></ion-icon>
-
-
-              </ion-button>  
-
-
-              <ion-alert ref="Alert" trigger="present-alert" header="Esta seguro que desea eliminar el turno?"
-                :buttons="alertButtons" @didDismiss="setResult($event)"></ion-alert>
-
-              <ion-toast color="primary" trigger="delete-toast" message="Hasta la vista turno! Lo hemos eliminado"
-                :duration="3000" :icon="document"></ion-toast>
-
-
-              <ion-button size="small" class="button-modificar" @click="redireccionTurno(e.id)">
-
-                <p v-if="devWidth > 576">Modificar</p>
-                <ion-icon :icon="build" aria-label="Modificar" :size="devWidth > 576 ? 'small' : 'large'"
-                  color="danger"></ion-icon>
-              </ion-button> -->
-
+ 
           </ion-item> </ion-col>
 
         <ion-col size-lg="2" size-xs="0"></ion-col>
@@ -162,7 +127,7 @@ export default {
     const store = useLoginStore();
     const { isLogin, isAdmin, user } = storeToRefs(store);
 
-   
+
     return {
       isLogin,
       isAdmin,
@@ -204,10 +169,20 @@ export default {
         alert("Se produjo un error");
       }
     },
-       
+      presentarFecha(fechaCurda){
+        const fecha = fechaCurda.replace(/T.*/,'').split('-').reverse().join('-')
+        const hora = fechaCurda.split('T')[1].substring(0, 5)
+        const fechahora = fecha + " " + hora
+        return fechahora
+      },
+
     async agregarALista() {
 
       try {
+       // const fecha = this.turnoSeleccionado.fechaHora.replace(/T.*/,'').split('-').reverse().join('-')
+        //const hora = this.turnoSeleccionado.fechaHora.split('T')[1].substring(0, 5)
+        //const fechahora = fecha + " " + hora
+       // this.turnoSeleccionado.fechaHora = this.presentarFecha(this.turnoSeleccionado.fechaHora);
 
         await turnosService.agregarALista(this.turnoSeleccionado)
         await this.misTurnos()
@@ -218,7 +193,7 @@ export default {
         alert(e);
       }
     },
- 
+
     async listarTurnos() {
       try {
 
@@ -234,8 +209,9 @@ export default {
 
 
         const todosTurnos = await turnosService.listarTurnos()
-        this.turnos =  todosTurnos.filter(elemento => elemento.dniUsuario == this.user.dni)
+        this.turnos = todosTurnos.filter(elemento => elemento.dniUsuario == this.user.dni)
         this.mostrarTurnos = true;
+        this.warnDisabled();
 
       } catch (e) {
         alert("Se produjo un error");
@@ -246,7 +222,10 @@ export default {
       try {
 
         await turnosService.eliminarTurno(id)
-        await this.misTurnos();
+        if(this.isAdmin){
+          await this.listarTurnos();
+        } else {
+        await this.misTurnos();}
       } catch (e) {
         alert("Se produjo un error");
       }
@@ -263,17 +242,17 @@ export default {
     },
     mostarForm() {
       if (this.mostrar == true) {
-       
+
         this.mostar = false;
       } else {
-       
+
         this.mostrar = true;
       }
 
 
     },
     ocultar() {
-     
+
       this.mostrar = false;
     },
 
@@ -288,6 +267,12 @@ export default {
         alert("Se produjo un error");
       }
     },
+    warnDisabled() {
+      this.disabled = true
+      setTimeout(() => {
+        this.disabled = false
+      }, 1500)
+    }
 
   },
   data() {
@@ -300,6 +285,7 @@ export default {
       mostrar: false,
       servicios: [],
       empleados: [],
+      disabled: false,
       turnoSeleccionado: { estado: "Disponible" },
     };
   },
@@ -345,8 +331,20 @@ export default {
 
 
 
-.fecha{
+.fecha {
   text-shadow: #553a00;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+
+
+.cursor{
+  cursor: pointer;
+
+}
+.fecha {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin-left: 8px;
+  color: #f23514bb;
 }
 </style>
