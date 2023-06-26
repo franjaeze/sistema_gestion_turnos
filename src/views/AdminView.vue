@@ -51,7 +51,7 @@
                 <ion-card-header>
                   <ion-card-title> {{ e.nombre }} {{ e.apellido }}</ion-card-title>
                   <ion-card-subtitle> <b>Dni</b> {{ e.dni }} <b>email: </b>{{ e.email }} </ion-card-subtitle>
-                </ion-card-header><span class="ident"></span><b>Ingreso </b>{{ e.fechaIngreso }} <b>Estado </b>{{ e.estado }}
+                </ion-card-header><span class="ident"></span><b>Ingreso </b>{{ e.fechaIngreso }}
                 <b>Fecha de nacimento</b> {{ e.fechaNacimiento }}
 
                 <ion-card-content><b>Servicios que realiza:</b>

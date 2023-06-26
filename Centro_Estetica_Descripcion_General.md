@@ -114,7 +114,7 @@ Para el usuario administrador le permitira un control mas eficiente de la agenda
 - IdServicio
 - DniProfesional
 - FechaHora
-- Estado
+-
 
 ```
 

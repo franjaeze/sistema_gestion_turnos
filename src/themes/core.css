@@ -1,11 +1,12 @@
 
  ion-toolbar {
-  --background: var(--ion-color-secondary);
-  --color: var(--ion-color-tertiary);
-  align-content: left;
-   border: 3px solid;
-  font-size: 14px;
-  border-color: var(--ion-color-primary-shade)
+  --background:  linear-gradient(90deg, rgba(233,180,59,1) 0%, rgba(189,189,189,1) 15%, rgba(124,109,103,1) 80%);    
+ 
+ }
+ .navbar{
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
  }
 
  .tituloMenu{
@@ -274,21 +275,11 @@ ion-icon {
 
 .button-56 {
   align-items: center;
-  appearance: none;
-  background-color: var(--ion-color-medium);
-  border-radius: 4px;
-  border-width: 0;
-  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-  box-sizing: border-box;
-  color: #4f4f50;
   cursor: pointer;
   display: inline-flex;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   height: 35px;
-  margin: 5px;
   justify-content: center;
-  line-height: 1;
-  list-style: none;
   overflow: hidden;
   position: relative;
   text-align: left;
@@ -299,12 +290,11 @@ ion-icon {
   touch-action: manipulation;
   white-space: nowrap;
   will-change: box-shadow, transform;
-  font-size: 22px;
-  margin: 5px;
-  font-size: 22px;
+  margin: 10px;
+  font-size: 18px;
   font-family: 'Roboto', Arial, sans-serif;
   font-weight: 700;
-  color: #655959;
+  color: #fffbfbfc;
   letter-spacing: 0.2em;
 }
 
@@ -323,7 +313,7 @@ ion-icon {
 }
 
 .iconos{
-  color: #acaaaa;
+  color: #1a1301;
 }
 ion-toast {
   --background: var(--ion-color-light-shade);

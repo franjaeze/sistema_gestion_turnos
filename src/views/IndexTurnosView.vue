@@ -6,7 +6,7 @@
         </ion-col>
         <ion-col size-lg="6" size-xs="12">
 
-          <ion-button   class="button-50" id="grande" v-if="!isAdmin" @click="misTurnos">Mis
+          <ion-button class="button-50" id="grande" v-if="!isAdmin" @click="misTurnos">Mis
             turnos</ion-button>
           <ion-button class="button-50" v-if="isAdmin" @click="listarTurnos">Listar turnos</ion-button>
           <ion-button v-if="isAdmin" class="button-50" @click="mostarForm">Agregar turno</ion-button>
@@ -17,14 +17,14 @@
 
           <ion-list class="lista" v-show="mostrar">
 
-
-            <ion-input class="margin3" v-model="turnoSeleccionado.dniUsuario" color="warning" fill="outline"
-              label-placement="floating" label="DNI" required="true"> </ion-input>
-
+            <div v-if="isAdmin">
+              <ion-input class="margin3" v-model="turnoSeleccionado.dniUsuario" color="warning" fill="outline"
+                label-placement="floating" label="DNI" required="true"> </ion-input>
+            </div>
             <ion-select class="margin3" v-model="turnoSeleccionado.idServicio" interface="popover" label="Servicio"
               placeholder="Servicio" color="warning" fill="outline" required="true">
               <ion-select-option v-for="e in servicios" :value="e.nombre"> {{ e.nombre }}</ion-select-option>
- 
+
             </ion-select>
 
 
@@ -32,7 +32,7 @@
               placeholder="Profesional" color="warning" fill="outline" required="true">
               <ion-select-option v-for="e in empleados" :value="e.nombre"> {{ e.nombre }} {{ e.apellido
               }}</ion-select-option>
-             
+
             </ion-select>
 
             <section class="centrado"><ion-datetime class="datetime" v-model="turnoSeleccionado.fechaHora"
@@ -67,7 +67,8 @@
               <ion-row>
                 <ion-col size="11">
                   <ion-card-header>
-                    <ion-card-title class="fecha">Fecha:   <p class="fecha">{{ presentarFecha(e.fechaHora)}}</p></ion-card-title>
+                    <ion-card-title class="fecha">Fecha: <p class="fecha">{{ presentarFecha(e.fechaHora) }}</p>
+                      </ion-card-title>
                     <ion-card-subtitle>Dni <b>{{ e.dniUsuario }}</b></ion-card-subtitle>
                   </ion-card-header> <span class="ident"></span> Servicio de <b>{{ e.idServicio }}</b> con <b>{{
                     e.dniProfesional }}</b>
@@ -78,21 +79,21 @@
                 </ion-col>
                 <ion-col size="1">
 
-                  <span class="cursor" id="delete-toast" @click="eliminarTurno(e.id)">     <ion-icon  :icon="trash" :size="devWidth > 576 ? 'small' : 'large'" aria-label="Eliminar"
-                      color="danger"></ion-icon>     </span>
-                
+                  <span class="cursor" id="delete-toast" @click="eliminarTurno(e.id)"> <ion-icon :icon="trash"
+                      :size="devWidth > 576 ? 'small' : 'large'" aria-label="Eliminar" color="danger"></ion-icon> </span>
+
                   <ion-toast color="primary" trigger="delete-toast" message="Hasta la vista turno! Lo hemos eliminado"
                     :duration="3000" :icon="document"></ion-toast>
 
-                    <span  class="cursor"  @click="redireccionTurno(e.id)"><ion-icon :icon="build" aria-label="Modificar" :size="devWidth > 576 ? 'small' : 'large'"
-                      color="danger"></ion-icon></span>
- 
-  
-                 </ion-col>
+                  <span class="cursor" @click="redireccionTurno(e.id)"><ion-icon :icon="build" aria-label="Modificar"
+                      :size="devWidth > 576 ? 'small' : 'large'" color="danger"></ion-icon></span>
+
+
+                </ion-col>
               </ion-row>
             </ion-card>
 
- 
+
           </ion-item> </ion-col>
 
         <ion-col size-lg="2" size-xs="0"></ion-col>
@@ -169,24 +170,26 @@ export default {
         alert("Se produjo un error");
       }
     },
-      presentarFecha(fechaCurda){
-        const fecha = fechaCurda.replace(/T.*/,'').split('-').reverse().join('-')
-        const hora = fechaCurda.split('T')[1].substring(0, 5)
-        const fechahora = fecha + " " + hora
-        return fechahora
-      },
+    presentarFecha(fechaCurda) {
+      const fecha = fechaCurda.replace(/T.*/, '').split('-').reverse().join('-')
+      const hora = fechaCurda.split('T')[1].substring(0, 5)
+      const fechahora = fecha + " " + hora
+      return fechahora
+    },
 
     async agregarALista() {
 
       try {
-       // const fecha = this.turnoSeleccionado.fechaHora.replace(/T.*/,'').split('-').reverse().join('-')
-        //const hora = this.turnoSeleccionado.fechaHora.split('T')[1].substring(0, 5)
-        //const fechahora = fecha + " " + hora
-       // this.turnoSeleccionado.fechaHora = this.presentarFecha(this.turnoSeleccionado.fechaHora);
 
+        if (!this.isAdmin) {
+          this.turnoSeleccionado.dniUsuario = this.user.dni
+        }
+        this.turnoSeleccionado.estado = "Asignado";
         await turnosService.agregarALista(this.turnoSeleccionado)
+        this.turnoSeleccionado = {};
         await this.misTurnos()
-        this.turnoSeleccionado = { estado: "Disponible" }
+
+
 
         this.mostrar = false; // ver porque no me funcionaba poniendo el metodo ocultar() aqui
       } catch (e) {
@@ -222,10 +225,11 @@ export default {
       try {
 
         await turnosService.eliminarTurno(id)
-        if(this.isAdmin){
+        if (this.isAdmin) {
           await this.listarTurnos();
         } else {
-        await this.misTurnos();}
+          await this.misTurnos();
+        }
       } catch (e) {
         alert("Se produjo un error");
       }
@@ -338,13 +342,13 @@ export default {
 
 
 
-.cursor{
+.cursor {
   cursor: pointer;
 
 }
+
 .fecha {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   margin-left: 8px;
   color: #f23514bb;
-}
-</style>
+}</style>

@@ -20,8 +20,7 @@
           </ion-select>
           <ion-input v-model="turnoModificado.fechaHora" color="warning" label="Fecha y hora del turno" fill="outline"
             type="datetime-local"></ion-input>
-          <ion-input v-model="turnoModificado.estado" color="warning" label="Estado del turno" fill="outline"
-            :value="turnoModificado.estado" placeholder="Disponible" readonly></ion-input>
+      
         </ion-list>
 
       </ion-item>
@@ -55,8 +54,8 @@ export default {
       idTurno: this.$route.params.id,
       servicios: [],
       empleados: [],  
-      turnoSeleccionado: { dniUsuario: "", idServicio: "", dniProfesional: "", fechaHora: "", estado: "" },
-      turnoModificado: { dniUsuario: "", idServicio: "", dniProfesional: "", fechaHora: "", estado: "" },
+      turnoSeleccionado: { dniUsuario: "", idServicio: "", dniProfesional: "", fechaHora: "" },
+      turnoModificado: { dniUsuario: "", idServicio: "", dniProfesional: "", fechaHora: "" },
     };
   },
 
