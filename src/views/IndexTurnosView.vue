@@ -19,7 +19,7 @@
 
           <ion-list class="lista" v-show="mostrar">
 
-          <FormTurno :turnoSeleccionado="turnoSeleccionado" 
+          <FormularioTurno :turnoSeleccionado="turnoSeleccionado" 
                     :empleados="empleados" 
                     :servicios="servicios"
                     @agregar-a-lista="agregarALista"  />
@@ -122,13 +122,13 @@ import { useLoginStore } from "../stores/login";
 import { document } from 'ionicons/icons';
 import serviciosService from '../services/serviciosService'
 import empleadosService from '../services/empleadosService'
-import  FormTurno  from '../components/formTurno.vue';
+import FormularioTurno from "../components/FormularioTurno.vue";
 import { trash, person, build } from 'ionicons/icons'
 
 
 
 export default {
-  components: { FormTurno,IonPage, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon, IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow },
+  components: { FormularioTurno,IonPage, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon, IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow },
   setup() {
 
     const store = useLoginStore();
