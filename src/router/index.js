@@ -31,7 +31,7 @@ const router = createRouter({
     {
       path: '/turnos/editar/:id',
       name: 'ModificacionTurno',
-      component: ModificacionTurnoView
+      component: ModificacionTurnoView,
     },
     {
       path: '/login',

@@ -27,10 +27,13 @@
                 label-placement="floating" label="telefono" required="true"> </ion-input>
 
 
-              <section class="centrado"><ion-datetime class="datetime" v-model="empleadoNuevo.fechaNacimiento"
+              <section class="centrado">
+                <ion-datetime class="datetime" v-model="empleadoNuevo.fechaNacimiento"
                   presentation="day-month-year" :prefer-wheel="true" color="danger" label-placement="floating"
-                  fill="outline" type="datetime-local" label="Fecha de nacimiento" locale="es-ES" required="true">
-                  <span slot="title">Fecha de Nacimiento</span></ion-datetime></section>
+                  fill="outline" type="datetime" label="Fecha de nacimiento"  required="true">
+                  <span slot="title">Fecha de Nacimiento</span>
+                </ion-datetime></section>
+
               <ion-input class="margin3" v-model="empleadoNuevo.email" color="warning" fill="outline"
                 label-placement="floating" label="email" required="true"> </ion-input>
 
@@ -126,7 +129,7 @@ export default {
         await empleadosService.agregarAListaEmpleados(this.empleadoNuevo)
 
         this.empleadoNuevo = { estado: "Activo", fechaIngreso: new Date().toLocaleDateString('en-US') }
-
+        console.log(this.empleadoNuevo)
         this.mostrarForm(); // ver porque no me funcionaba poniendo el metodo ocultar() aqui
       } catch (e) {
         alert(e);

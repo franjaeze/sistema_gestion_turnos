@@ -34,8 +34,7 @@ export default {
                                         
         const response = await axios.get("https://646beae07b42c06c3b2a949b.mockapi.io/usuarios");
         let resultado = response.data.filter(elemento =>  elemento.dni == this.usuario.dni &&  elemento.password == this.usuario.password)
-        console.log(resultado);
-        console.log(resultado != null);
+     
 
         if (resultado.length != 0){
           this.login( { nombre: resultado[0].nombre, id:resultado[0].id,dni:resultado[0].dni, permissions: [] } )

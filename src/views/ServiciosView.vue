@@ -52,19 +52,24 @@
 
 
             <!--  LISTAR SERVICIOS -->
+            <div v-if="loading" class="center"> <h1> Cargando Servicios</h1>
+            <ion-item  >
+              <ion-spinner   name="lines-sharp"></ion-spinner>                  
+            </ion-item></div>
 
-            <ion-card v-for="e in servicios" :key="e.tipoServicio">
+            <div v-else>
+            <ion-card  v-for="e in servicios" :key="e.tipoServicio" >
               <ion-card-content><ion-card-title> {{ e.nombre }} </ion-card-title>
 
                 {{ e.detalle }}
                 <ion-card-subtitle color="danger"> Valor: <b>{{ e.valor }}</b> Duracion: <b>{{ e.duracion }}</b>
                   <div class="alinearIconos" v-if="isAdmin">
-                    <span class="cursor"  @click="eliminarServicio(e.id)">
-                       <ion-icon size="large" :icon="trash" aria-label="Eliminar" color="danger"></ion-icon>
-                       </span>
+                    <span class="cursor" @click="eliminarServicio(e.id)">
+                      <ion-icon size="large" :icon="trash" aria-label="Eliminar" color="danger"></ion-icon>
+                    </span>
 
                     <span class="cursor" @click="redireccionTurno(e.id)">
-                      <ion-icon  size="large" :icon="build" aria-label="Modificar" color="danger"></ion-icon>
+                      <ion-icon size="large" :icon="build" aria-label="Modificar" color="danger"></ion-icon>
                     </span>
 
                   </div>
@@ -73,7 +78,7 @@
               </ion-card-content>
 
             </ion-card>
-
+          </div>
 
           </ion-col>
           <ion-col size-lg="2" size-sm="0"></ion-col>
@@ -87,9 +92,9 @@ import { storeToRefs } from "pinia";
 import { useLoginStore } from "../stores/login";
 import { trash, build } from 'ionicons/icons';
 import serviciosService from '../services/serviciosService'
-import { IonPage, IonIcon, IonContent, IonSelect, IonSelectOption, IonInput, IonGrid, IonCol, IonRow, IonButton, IonCard, IonList, IonItem, IonThumbnail, IonLabel, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/vue'
+import { IonPage,IonSpinner, IonIcon, IonContent, IonSelect, IonSelectOption, IonInput, IonGrid, IonCol, IonRow, IonButton, IonCard, IonList, IonItem, IonThumbnail, IonLabel, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/vue'
 export default {
-  components: { IonPage, IonIcon, IonButton, IonSelect, IonSelectOption, IonInput, IonContent, IonGrid, IonCol, IonRow, IonList, IonCard, IonThumbnail, IonLabel, IonItem, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle }
+  components: { IonPage,IonSpinner, IonIcon, IonButton, IonSelect, IonSelectOption, IonInput, IonContent, IonGrid, IonCol, IonRow, IonList, IonCard, IonThumbnail, IonLabel, IonItem, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle }
   , setup() {
     const store = useLoginStore();
     const { isLogin, isAdmin, user } = storeToRefs(store);
@@ -98,7 +103,8 @@ export default {
       isLogin,
       isAdmin,
       user,
-      trash, build
+      trash, build,
+     
 
     };
   },
@@ -110,6 +116,7 @@ export default {
       mostrar: false,
       servicioNuevo: { nombre: "", duracion: "", valor: "", detalle: "", tipoServicio: "" },
       page: 1,
+      loading:false,
 
     }
   }, mounted() {
@@ -118,11 +125,16 @@ export default {
   methods:
   {
     async listarServicios() {
+      this.loading=true
+      console.log(this.loading)
       try {
         this.servicios = await serviciosService.listarServicios()
-
+        console.log(this.loading)
       } catch (e) {
         alert("Se produjo un error");
+      } finally{
+        this.loading=false;
+        console.log(this.loading)
       }
     },
     agregarServicio() {
@@ -205,12 +217,23 @@ ion-card:active {
 ion-card-title {
   --color: var(--ion-color-warning);
 }
-
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+}
+ion-spinner{
+  height: 100px;
+  width: 100px;
+}
 .alinearIconos {
   display: flex;
- 
- 
 
-  justify-content: flex-end;
+
+
+  justify-content: flex-
+  
+  end;
 }
 </style>

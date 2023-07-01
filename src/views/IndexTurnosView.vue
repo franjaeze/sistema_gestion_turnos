@@ -14,10 +14,17 @@
           <ion-button v-show="mostrar" class="button-50" @click="mostrar = !mostrar">Cancelar</ion-button>
           <ion-button class='button-50' @click="irAHome">Ir a home</ion-button>
 
+       
+
 
           <ion-list class="lista" v-show="mostrar">
 
-            <div v-if="isAdmin">
+          <FormTurno :turnoSeleccionado="turnoSeleccionado" 
+                    :empleados="empleados" 
+                    :servicios="servicios"
+                    @agregar-a-lista="agregarALista"  />
+
+        <!--     <div v-if="isAdmin">
               <ion-input class="margin3" v-model="turnoSeleccionado.dniUsuario" color="warning" fill="outline"
                 label-placement="floating" label="DNI" required="true"> </ion-input>
             </div>
@@ -41,13 +48,12 @@
                 day-values="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31"
                 hour-values="9,10,11,12,13,14,15,16,17,18" required="true">
                 <span slot="title">Eliga dia de la reserva</span></ion-datetime></section>
-            <!-- <ion-input  v-model="turnoSeleccionado.fechaHora" color ="warning" label-placement="floating" fill="outline" type="datetime-local" label="Fecha y hora del turno" ></ion-input> -->
             <ion-input class="margin3" v-model="turnoSeleccionado.estado" color="warning" label-placement="floating"
               fill="outline" label="Estado del turno" placeholder="Disponible" value="Disponible" readonly></ion-input>
             <ion-button class="button-50" id="open-toast" @click="agregarALista">Agregar turno</ion-button>
             <ion-toast color="primary" trigger="open-toast" message="Genial! Turno reservado" :duration="3000"
               :icon="document"></ion-toast>
-
+ -->
           </ion-list>
 
         </ion-col>
@@ -67,7 +73,7 @@
               <ion-row>
                 <ion-col size="11">
                   <ion-card-header>
-                    <ion-card-title class="fecha">Fecha: <p class="fecha">{{ presentarFecha(e.fechaHora) }}</p>
+                    <ion-card-title class="fecha">Fecha: <p class="fecha" v-if="e.fechaHora!=undefined">{{ presentarFecha(e.fechaHora) }}</p>
                       </ion-card-title>
                     <ion-card-subtitle>Dni <b>{{ e.dniUsuario }}</b></ion-card-subtitle>
                   </ion-card-header> <span class="ident"></span> Servicio de <b>{{ e.idServicio }}</b> con <b>{{
@@ -116,13 +122,13 @@ import { useLoginStore } from "../stores/login";
 import { document } from 'ionicons/icons';
 import serviciosService from '../services/serviciosService'
 import empleadosService from '../services/empleadosService'
-import { ref } from 'vue';
+import  FormTurno  from '../components/formTurno.vue';
 import { trash, person, build } from 'ionicons/icons'
 
 
 
 export default {
-  components: { IonPage, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon, IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow },
+  components: { FormTurno,IonPage, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon, IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow },
   setup() {
 
     const store = useLoginStore();
@@ -177,21 +183,22 @@ export default {
       return fechahora
     },
 
-    async agregarALista() {
-
+    async agregarALista(turnoNuevo) {
+  
       try {
 
         if (!this.isAdmin) {
-          this.turnoSeleccionado.dniUsuario = this.user.dni
+          turnoNuevo.dniUsuario = this.user.dni 
         }
-        this.turnoSeleccionado.estado = "Asignado";
-        await turnosService.agregarALista(this.turnoSeleccionado)
-        this.turnoSeleccionado = {};
+        turnoNuevo.estado = "Asignado";
+        
+        await turnosService.agregarALista(turnoNuevo)
+        this.turnoNuevo = {};
         await this.misTurnos()
 
 
 
-        this.mostrar = false; // ver porque no me funcionaba poniendo el metodo ocultar() aqui
+        this.mostrar=!this.mostrar // ver porque no me funcionaba poniendo el metodo ocultar() aqui
       } catch (e) {
         alert(e);
       }

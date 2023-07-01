@@ -98,7 +98,7 @@ export default {
             <span v-if="devWidth > 576">
                 <p v-if="isLogin" class="bienvenido">Bienvenido</p>
                 <RouterLink to="/logout">
-                  <ion-chip class="chip"> {{ user.nombre }} <ion-icon :icon="person" class="cursor" size="small"></ion-icon>
+                  <ion-chip   v-if="isLogin" class="chip"> {{ user.nombre }} <ion-icon :icon="person" class="cursor" size="small"></ion-icon>
                 </ion-chip>
               </RouterLink>
               <ion-chip v-if="isAdmin" class="admin"> Usted esta en rol {{ user.rol }} </ion-chip>
