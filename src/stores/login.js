@@ -27,6 +27,8 @@ export const useLoginStore = defineStore('login', {
                 this.user.rol = 'normal';
               }
             
+        },getDni(){
+            return this.user.dni
         },
         hasPermissions(access) {
             //console.log(this.user.permissions.filter(p => p==access).length > 0);

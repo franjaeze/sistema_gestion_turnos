@@ -6,75 +6,44 @@
         </ion-col>
         <ion-col size-lg="6" size-xs="12">
 
+          <!--         TODOS LOS BOTONES DE ARRIBA -->
+
           <ion-button class="button-50" id="grande" v-if="!isAdmin" @click="misTurnos">Mis
             turnos</ion-button>
           <ion-button class="button-50" v-if="isAdmin" @click="listarTurnos">Listar turnos</ion-button>
-          <ion-button v-if="isAdmin" class="button-50" @click="mostarForm">Agregar turno</ion-button>
-          <ion-button v-show="!mostrar" v-if="!isAdmin" class="button-50" @click="mostarForm">Sacar turno</ion-button>
+          <ion-button v-if="isAdmin" class="button-50" @click="mostrarForm">Agregar turno</ion-button>
+          <ion-button v-show="!mostrar" v-if="!isAdmin" class="button-50" @click="mostrarForm">Sacar turno</ion-button>
           <ion-button v-show="mostrar" class="button-50" @click="mostrar = !mostrar">Cancelar</ion-button>
           <ion-button class='button-50' @click="irAHome">Ir a home</ion-button>
 
-       
-
-
           <ion-list class="lista" v-show="mostrar">
 
-          <FormularioTurno :turnoSeleccionado="turnoSeleccionado" 
-                    :empleados="empleados" 
-                    :servicios="servicios"
-                    @agregar-a-lista="agregarALista"  />
+              <!--     COMPONENTE FORMULARIO TURNO  -->
+            <FormularioTurno :turnoSeleccionado="turnoSeleccionado"
+                             :empleados="empleados"
+                             :servicios="servicios"
+              @agregar-a-lista="agregarALista" />
 
-        <!--     <div v-if="isAdmin">
-              <ion-input class="margin3" v-model="turnoSeleccionado.dniUsuario" color="warning" fill="outline"
-                label-placement="floating" label="DNI" required="true"> </ion-input>
-            </div>
-            <ion-select class="margin3" v-model="turnoSeleccionado.idServicio" interface="popover" label="Servicio"
-              placeholder="Servicio" color="warning" fill="outline" required="true">
-              <ion-select-option v-for="e in servicios" :value="e.nombre"> {{ e.nombre }}</ion-select-option>
-
-            </ion-select>
-
-
-            <ion-select class="margin3" v-model="turnoSeleccionado.dniProfesional" interface="popover" label="Profesional"
-              placeholder="Profesional" color="warning" fill="outline" required="true">
-              <ion-select-option v-for="e in empleados" :value="e.nombre"> {{ e.nombre }} {{ e.apellido
-              }}</ion-select-option>
-
-            </ion-select>
-
-            <section class="centrado"><ion-datetime class="datetime" v-model="turnoSeleccionado.fechaHora"
-                presentation="date-time" :prefer-wheel="true" color="danger" label-placement="floating" fill="outline"
-                type="datetime-local" label="Fecha y hora del turno" locale="es-ES" minute-values="0,15,30,45"
-                day-values="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31"
-                hour-values="9,10,11,12,13,14,15,16,17,18" required="true">
-                <span slot="title">Eliga dia de la reserva</span></ion-datetime></section>
-            <ion-input class="margin3" v-model="turnoSeleccionado.estado" color="warning" label-placement="floating"
-              fill="outline" label="Estado del turno" placeholder="Disponible" value="Disponible" readonly></ion-input>
-            <ion-button class="button-50" id="open-toast" @click="agregarALista">Agregar turno</ion-button>
-            <ion-toast color="primary" trigger="open-toast" message="Genial! Turno reservado" :duration="3000"
-              :icon="document"></ion-toast>
- -->
           </ion-list>
 
         </ion-col>
         <ion-col size-lg="2" size-xs="0"></ion-col>
       </ion-row>
     </ion-grid>
-
-
     <ion-grid>
       <ion-row>
         <ion-col size-lg="3" size-xs="12"> </ion-col>
         <ion-col size-lg="6" size-xs="12">
           <ion-item lines="full" v-for="e in turnos" :key="e.id">
 
-
+                        <!--               LISTADO DE TURNOS  -->
             <ion-card class="carta" color="medium">
               <ion-row>
                 <ion-col size="11">
                   <ion-card-header>
-                    <ion-card-title class="fecha">Fecha: <p class="fecha" v-if="e.fechaHora!=undefined">{{ presentarFecha(e.fechaHora) }}</p>
-                      </ion-card-title>
+                    <ion-card-title class="fecha">Fecha: <p class="fecha" v-if="e.fechaHora != undefined">{{
+                      presentarFecha(e.fechaHora) }}</p>
+                    </ion-card-title>
                     <ion-card-subtitle>Dni <b>{{ e.dniUsuario }}</b></ion-card-subtitle>
                   </ion-card-header> <span class="ident"></span> Servicio de <b>{{ e.idServicio }}</b> con <b>{{
                     e.dniProfesional }}</b>
@@ -83,8 +52,8 @@
                     Reserva <b>{{ e.id }} </b> Estado es <b>{{ e.estado }}</b>
                   </ion-card-content>
                 </ion-col>
-                <ion-col size="1">
-
+                <ion-col size="1" style="align-self: flex-end">            <!--   BOTONES DEL FORMULARIO -->
+                    <div class="iconAlinment">
                   <span class="cursor" id="delete-toast" @click="eliminarTurno(e.id)"> <ion-icon :icon="trash"
                       :size="devWidth > 576 ? 'small' : 'large'" aria-label="Eliminar" color="danger"></ion-icon> </span>
 
@@ -92,25 +61,14 @@
                     :duration="3000" :icon="document"></ion-toast>
 
                   <span class="cursor" @click="redireccionTurno(e.id)"><ion-icon :icon="build" aria-label="Modificar"
-                      :size="devWidth > 576 ? 'small' : 'large'" color="danger"></ion-icon></span>
-
-
+                      :size="devWidth > 576 ? 'small' : 'large'" color="danger"></ion-icon></span></div>
                 </ion-col>
               </ion-row>
             </ion-card>
-
-
           </ion-item> </ion-col>
-
         <ion-col size-lg="2" size-xs="0"></ion-col>
       </ion-row>
     </ion-grid>
-
-
-
-
-
-
   </ion-content>
 </template>
 
@@ -124,182 +82,204 @@ import serviciosService from '../services/serviciosService'
 import empleadosService from '../services/empleadosService'
 import FormularioTurno from "../components/FormularioTurno.vue";
 import { trash, person, build } from 'ionicons/icons'
-
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import { useRouter, useRoute } from 'vue-router'
 
 
 export default {
-  components: { FormularioTurno,IonPage, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon, IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow },
+  components: { FormularioTurno, IonPage, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon, IonAlert, IonText, IonHeader, IonButton, IonContent, IonList, IonInput, IonItem, IonSelect, IonSelectOption, IonDatetime, IonToast, IonGrid, IonCol, IonRow },
   setup() {
-
+    const router = useRouter()
+    const route = useRoute()
     const store = useLoginStore();
     const { isLogin, isAdmin, user } = storeToRefs(store);
+    const documentIcon = document;
+    let devWidth = ref(0);
+    const personIcon = person;
+    const trashIcon = trash;
+    const buildIcon = build;
+    const servicios = ref([]);
+    const empleados = ref([]);
+    const mostrar = ref(false);
+    const turnos = ref([]);
+    const turno = ref({});
+    const disabled = ref(false);
+    const turnoSeleccionado = ref({ estado: "Disponible" })
+
+ 
+ 
+    onMounted(() => {
+      listarServicios()
+      listarEmpleados()
+      devWidth = window.innerWidth;
+      window.addEventListener('resize', handleResize);
+    })
+
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', handleResize);
+    })
+
+    const irAHome = () => {
+       router.push("/")
+    };
+
+    const handleResize = () => {
+      devWidth = window.innerWidth
+    };
 
 
-    return {
-      isLogin,
-      isAdmin,
-      user,
-      document,
-      devWidth: 0,
-      person, trash, build
-    }
-  },
-  mounted() {
-    this.listarServicios()
-    this.listarEmpleados()
-    this.devWidth = window.innerWidth;
-    window.addEventListener('resize', this.handleResize);
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.handleResize);
-  },
+    
 
-  methods: {
-    irAHome() {
-      this.$router.push("/");
-
-    }, handleResize() {
-      this.devWidth = window.innerWidth;
-    },
-    async listarServicios() {
+    const listarServicios = async () => {
       try {
-        this.servicios = await serviciosService.listarServicios()
+        servicios.value = await serviciosService.listarServicios()
 
       } catch (e) {
-        alert("Se produjo un error");
+        alert("Se produjo un error al listar servicios");
       }
-    }, async listarEmpleados() {
+    };
+
+
+    const listarEmpleados = async () => {
       try {
-        this.empleados = await empleadosService.listarEmpleados()
+        empleados.value = await empleadosService.listarEmpleados()
 
       } catch (e) {
-        alert("Se produjo un error");
+        alert("Se produjo un error al listar empleados");
       }
-    },
-    presentarFecha(fechaCurda) {
+    };
+
+    const presentarFecha = (fechaCurda) => {
       const fecha = fechaCurda.replace(/T.*/, '').split('-').reverse().join('-')
       const hora = fechaCurda.split('T')[1].substring(0, 5)
       const fechahora = fecha + " " + hora
       return fechahora
-    },
+    };
 
-    async agregarALista(turnoNuevo) {
-  
+    const agregarALista = async (turnoNuevo) => {
+ 
       try {
-
-        if (!this.isAdmin) {
-          turnoNuevo.dniUsuario = this.user.dni 
+        if (!isAdmin.value) {
+          turnoNuevo.dniUsuario = user.value.dni
         }
         turnoNuevo.estado = "Asignado";
-        
         await turnosService.agregarALista(turnoNuevo)
-        this.turnoNuevo = {};
-        await this.misTurnos()
-
-
-
-        this.mostrar=!this.mostrar // ver porque no me funcionaba poniendo el metodo ocultar() aqui
+        turnoNuevo = {};
+        await misTurnos()
+        mostrar.value = !mostrar.value
       } catch (e) {
         alert(e);
       }
-    },
-
-    async listarTurnos() {
+    };
+   
+    const listarTurnos = async () => {
       try {
-
-        this.turnos = await turnosService.listarTurnos()
-
+        turnos.value = await turnosService.listarTurnos()
       } catch (e) {
-        alert("Se produjo un error");
+        alert("Se produjo un error en listar turnos");
       }
-    },
-    async misTurnos() {
+    };
 
+    const misTurnos = async () => {
       try {
-
-
         const todosTurnos = await turnosService.listarTurnos()
-        this.turnos = todosTurnos.filter(elemento => elemento.dniUsuario == this.user.dni)
-        this.mostrarTurnos = true;
-        this.warnDisabled();
+        turnos.value = todosTurnos.filter(elemento => elemento.dniUsuario == user.value.dni)
+        console.log('pasa x linea 186')
+   
+    /*     warnDisabled(); */
 
       } catch (e) {
-        alert("Se produjo un error");
+        alert("Se produjo un error en mis turnos");
       }
-    },
+    };
 
-    async eliminarTurno(id) {
+    const eliminarTurno = async (id) => {
       try {
-
         await turnosService.eliminarTurno(id)
-        if (this.isAdmin) {
-          await this.listarTurnos();
+        if (isAdmin) {
+          await listarTurnos();
         } else {
-          await this.misTurnos();
+          await misTurnos();
+        
         }
       } catch (e) {
-        alert("Se produjo un error");
+        alert("Se produjo un error al eliminar turno");
       }
-    },
+    };
 
-    redireccionTurno(id) {
-      this.$router.push({
+     let redireccionTurno = (id) => {
+      router.push({
         name: "ModificacionTurno",
         params: {
           id: id,
         }
       }
-      );
-    },
-    mostarForm() {
-      if (this.mostrar == true) {
+      )
+    };
+    const mostrarForm = () => {
 
-        this.mostar = false;
+      if (mostrar.value == true) {
+
+        mostrar.value = false;
       } else {
 
-        this.mostrar = true;
+        mostrar.value = true;
       }
+    };
 
-
-    },
-    ocultar() {
-
-      this.mostrar = false;
-    },
-
-    async modificarTurno(id) {
+    const modificarTurno = async (id) => {
       try {
-
-        const turno = { ...this.turno }
+        const turno = { ...turno }
         await turnosService.modificarTurno(id, turno)
-        await this.listarTurnos();
-        this.turno = {}
+        await listarTurnos();
+        turno = {}
       } catch (e) {
-        alert("Se produjo un error");
+        alert("Se produjo un error al modificar turno");
       }
-    },
-    warnDisabled() {
+    };
+
+
+    const warnDisabled = () => {
       this.disabled = true
       setTimeout(() => {
         this.disabled = false
       }, 1500)
     }
 
-  },
-  data() {
+   
+
     return {
-      turnos: [],
-      turno: {},
-      mostrarTurnos: false,
-      ocultar: false,
-      admin: false,
-      mostrar: false,
-      servicios: [],
-      empleados: [],
-      disabled: false,
-      turnoSeleccionado: { estado: "Disponible" },
-    };
+      isLogin,
+      isAdmin,
+      user,
+      document,
+      devWidth,
+      person, trash, build,
+      presentarFecha,
+      listarEmpleados,
+      listarServicios,
+      handleResize,
+      irAHome,
+      modificarTurno,
+      mostrarForm,
+      redireccionTurno,
+      eliminarTurno,
+      misTurnos,
+      listarTurnos,
+      agregarALista,
+      warnDisabled,
+      turnos,
+      turno,
+      mostrar,
+      servicios,
+      empleados,
+      disabled,
+      turnoSeleccionado,
+
+    }
   },
+
+
 
 };
 
@@ -358,4 +338,10 @@ export default {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   margin-left: 8px;
   color: #f23514bb;
-}</style>
+}
+.iconAlinment {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-end;
+}
+</style>

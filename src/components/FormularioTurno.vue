@@ -34,7 +34,7 @@
   
         <ion-button class="button-50" id="open-toast" @click="agregarALista">Agregar turno
         </ion-button>
-        <ion-button class="button-50" @click="prueba">a ver si llega
+        <ion-button class="button-50" @click="prueba2">a ver si llega
         </ion-button>
         <ion-toast color="primary" trigger="open-toast" message="Genial! Turno reservado" :duration="3000"
         :icon="document">
@@ -59,18 +59,22 @@ setup() {
     const store = useLoginStore();
     const { isLogin, isAdmin, user } = storeToRefs(store);
 
+    let prueba2 = () =>{
+        console.log(user.value.dni)
+    }
 
     return {
         isLogin,
         isAdmin,
         user,
         document,
+        prueba2
          
 
     }
 },methods:{
     prueba(){
-        console.log(this.empleados)
+        console.log(this.user.dni)
     },
     agregarALista(){
         
@@ -93,6 +97,7 @@ setup() {
         admin: false,
         mostrar: false,
         disabled: false,
+        
       
     };
 },
