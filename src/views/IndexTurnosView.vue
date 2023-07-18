@@ -227,16 +227,16 @@ export default {
       }
     };
 
-    const modificarTurno = async (id) => {
+    /* const modificarTurno = async (id) => {
       try {
-        const turno = { ...turno }
+      let turno = { ...turno }
         await turnosService.modificarTurno(id, turno)
         await listarTurnos();
         turno = {}
       } catch (e) {
         alert("Se produjo un error al modificar turno");
       }
-    };
+    }; */
 
 
     const warnDisabled = () => {
