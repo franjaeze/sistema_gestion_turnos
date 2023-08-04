@@ -260,7 +260,7 @@ export default {
       listarServicios,
       handleResize,
       irAHome,
-      modificarTurno,
+ /*      modificarTurno, */
       mostrarForm,
       redireccionTurno,
       eliminarTurno,
